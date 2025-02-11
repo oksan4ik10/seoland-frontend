@@ -1,0 +1,126 @@
+.form {
+    align-items: start;
+    gap: 20px;
+}
+
+.form input {
+    padding-left: 0;
+}
+
+.form__head {
+    grid-column: 1/2;
+    display: flex;
+    align-items: start;
+}
+
+.form__client {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+.form__delivery {
+    grid-column: 1/2;
+    grid-row: 3/4;
+    align-self: stretch;
+}
+
+.form__comment {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    align-self: stretch;
+}
+
+.form__pay {
+    grid-column: 2/3;
+    grid-row: 4/5;
+}
+
+.form__cart {
+    grid-column: 2/3;
+    grid-row: 1/4;
+    align-self: stretch
+}
+
+
+
+
+.form__head label {
+    margin-top: 0;
+
+}
+
+.status {
+    color: var(--icon-active);
+    font-weight: 400;
+    background: #D4E0FA;
+    padding: 2px 12px;
+    border-radius: 8px;
+    width: max-content;
+    text-align: center;
+}
+
+.form__name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form__orderTitle {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.form__orderTitle p {
+    color: #131313;
+    font-family: Rubik;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.form__orderTitle p:last-child {
+    font-weight: 300;
+}
+
+.order {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.infoOrder {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.1fr) minmax(160px, 1fr) minmax(110px, .8fr);
+    gap: 5px;
+    align-items: center;
+}
+
+
+.infoCount {
+    color: var(--color-title);
+    font-family: Rubik;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.infoPace {
+    font-size: .9em;
+}
+
+.infoCount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px
+}
+
+.infoCount span:last-child {
+    opacity: .7;
+    font-size: 16px;
+}

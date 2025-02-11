@@ -1,0 +1,30 @@
+.row {
+    grid-gap: 1%;
+    grid-template-columns: 4% 20% 20% 20% 16% 16%;
+}
+
+.col:last-child {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.colEmail span {
+    line-height: 2rem;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+
+}

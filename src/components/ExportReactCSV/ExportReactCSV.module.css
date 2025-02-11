@@ -1,0 +1,11 @@
+.btn {
+    width: 30px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn img {
+    width: 100%;
+}

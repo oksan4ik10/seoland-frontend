@@ -1,0 +1,110 @@
+.head__filters {
+    margin-top: 20px;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
+
+}
+
+.head__filters>* {
+    flex: 1 0 15.8%;
+    width: calc(95% / 6);
+    z-index: 99;
+}
+
+.head__filters>*>* {
+    width: 100%;
+}
+
+.tables {
+    padding: 0px 20px;
+    margin-top: 0px;
+}
+
+.dataTable {
+    height: 60vh;
+}
+
+.row {
+    grid-template-columns: 7% 10% 11% 10% 10% 12% 11% 8% 11% 6%;
+
+}
+
+.row__title {
+    padding-right: 25px;
+    position: relative;
+}
+
+.excel {
+    position: absolute;
+    right: 15px;
+    top: -10px;
+}
+
+.text {
+    padding: 20px;
+    color: var(--color-title)
+}
+
+.text span {
+    color: var(--icon-active);
+    cursor: pointer;
+    position: relative;
+    transition: .3s;
+}
+
+.text span::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--icon-active);
+}
+
+.text span:hover {
+    opacity: .7;
+}
+
+.rowItem>div {
+    line-height: 2rem;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+}
+
+.charts {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.charts>* {
+    height: auto;
+    flex: 1 0 30%;
+}
+
+.chartItem {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 2px 0px rgba(186, 186, 186, 0.40);
+}
+
+.chartTitle {
+    color: var(--color-title);
+    font-weight: 400;
+    font-size: 18px;
+}
+
+/* 
+.tables {
+    min-height: 300px;
+} */

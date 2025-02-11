@@ -1,0 +1,37 @@
+.wrapper__head {
+    padding: 10px 0px 10px 40px;
+    width: 100%;
+}
+
+.head__table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 49%;
+    min-width: 600px;
+
+}
+
+.row {
+    width: 49%;
+    min-width: 600px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.col:last-child {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+}
+
+.page__tables {
+    padding: 0;
+    padding-left: 40px;
+}
