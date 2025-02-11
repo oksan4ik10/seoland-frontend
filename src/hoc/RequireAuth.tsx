@@ -1,16 +1,15 @@
 import { PropsWithChildren } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 
-import { useAppSelector } from '../store/store';
-
 
 
 const RequireAuth = ({ children }: PropsWithChildren) => {
     const location = useLocation();
-    const token: string = useAppSelector((store) => store.userReducer).access_token;
+    const token: string = localStorage.getItem('token') || '';
 
-    const isAdmin = useAppSelector((store) => store.userReducer).user.is_admin;
+    const isAdmin = localStorage.getItem('isAdmin') || false;
     if (!token) {
+        console.log('test')
         return <Navigate to='/login' state={{ from: location }} />
     }
     if ((!isAdmin) && ((location.pathname.slice(0, 10) === "/davdamers") || (location.pathname.slice(0, 12) === "/directories"))) {

@@ -35,9 +35,8 @@ import 'overlayscrollbars/overlayscrollbars.css';
 import './App.css'
 
 
-import { davDamerAPI } from "./store/api/DavdamerAPI";
 import { useAppDispatch } from "./store/store";
-import { setToken, setUser, setIsAdmin } from "./store/reducer/userReducer";
+import { setToken, setIsAdmin } from "./store/reducer/userReducer";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -87,21 +86,21 @@ function App() {
     dispatch(setIsAdmin(Boolean(isAdmin)))
   }, [])
 
-  useEffect(() => {
-    if (dataAuth) {
-      dispatch(setUser({ access_token: token, user: dataAuth, isAuth: true }))
-    }
-    if (errorAuth) {
-      localStorage.removeItem("token")
-      dispatch(setToken(""))
-      localStorage.removeItem("isAdmin")
-      dispatch(setIsAdmin(false))
-    }
+  // useEffect(() => {
+  //   if (dataAuth) {
+  //     dispatch(setUser({ access_token: token, user: dataAuth, isAuth: true }))
+  //   }
+  //   if (errorAuth) {
+  //     localStorage.removeItem("token")
+  //     dispatch(setToken(""))
+  //     localStorage.removeItem("isAdmin")
+  //     dispatch(setIsAdmin(false))
+  //   }
 
-  })
+  // })
 
-  const { data: dataAuth, isLoading, error: errorAuth } = davDamerAPI.useFetchAuthQuery();
-  if (isLoading) return <>Загрузка</>
+  // const { data: dataAuth, isLoading, error: errorAuth } = davDamerAPI.useFetchAuthQuery();
+  // if (isLoading) return <>Загрузка</>
 
 
   return (

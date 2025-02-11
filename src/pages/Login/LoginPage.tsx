@@ -35,6 +35,7 @@ const LoginPage = () => {
 
         try {
             const data = await auth(obj);
+            console.log(data)
             if ("error" in data) {
                 setError(true);
                 return
@@ -42,6 +43,7 @@ const LoginPage = () => {
             dispatch(setUser(data.data))
             navigate(fromPage, { replace: true })
         } catch (e) {
+            console.error(e)
             setError(true);
         }
     }

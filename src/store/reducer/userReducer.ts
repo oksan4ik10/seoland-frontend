@@ -7,7 +7,7 @@ export interface IUserInfo {
     isAuth: boolean;
 }
 
-const initialState: IUserInfo = { access_token: "", user: { last_name: "", name: "", id: -1, image: "", is_admin: false }, isAuth: false };
+const initialState: IUserInfo = { access_token: "", user: { last_name: "", name: "", id: -1, image: "", is_admin: false, role: null }, isAuth: false };
 
 export const userSlice = createSlice({
     name: 'user',
@@ -19,6 +19,7 @@ export const userSlice = createSlice({
             const isAdmin = action.payload.user.is_admin ? "true" : "";
             localStorage.setItem("token", action.payload.access_token);
             localStorage.setItem("isAdmin", isAdmin);
+            localStorage.setItem('user', JSON.stringify(action.payload.user))
         },
         setToken(state, action: PayloadAction<string>) {
             state.access_token = action.payload;

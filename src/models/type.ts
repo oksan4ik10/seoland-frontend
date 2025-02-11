@@ -129,14 +129,7 @@ export interface ILoginAPI {
     password: string
 }
 
-export interface IUser {
-    id: number,
-    name: string,
-    last_name: string,
-    image: string,
-    is_admin: boolean
 
-}
 export interface IDavdamerInfo extends IUser {
     registered_dt: Date;
     fullName: string;
@@ -324,4 +317,26 @@ export interface IDataDiagram {
     "label": string,
     "value": string
     date: Date
+}
+
+
+
+//NEW INTERFASES
+
+export interface IRole {
+    _id: string,
+    code: string,
+    name: string,
+
+}
+
+
+export interface IUser {
+    id: number,
+    name: string,
+    last_name: string,
+    image: string,
+    is_admin: boolean,
+    role: IRole | null
+
 }

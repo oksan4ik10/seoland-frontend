@@ -32,7 +32,7 @@ export const davDamerAPI = createApi({
         baseUrl: 'http://localhost:4000/api', prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).userReducer.access_token;
             if (token) {
-                headers.set('Authorization', `JWT ${token}`)
+                headers.set('Authorization', `${token}`)
             }
             return headers
         },
