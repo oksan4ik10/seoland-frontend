@@ -1,9 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { setToken } from "../../store/reducer/userReducer";
+import { setUser } from "../../store/reducer/userReducer";
 
 import "./PagesHead.css"
-import urlPhoto from "../../assets/images/test-davdamer.png";
 
 
 interface IProps {
@@ -18,8 +17,8 @@ function Pages(props: IProps) {
 
     const dispatch = useAppDispatch();
     const clickLogOut = () => {
-        dispatch(setToken(""))
-        localStorage.removeItem("token")
+        dispatch(setUser(null))
+        localStorage.removeItem("user")
         return <Navigate to='/login' state={{ from: location }} />
     }
     return (
@@ -31,9 +30,6 @@ function Pages(props: IProps) {
                         <div className="page__name">
                             <span>{infoUser.last_name}</span>
                             <span>{infoUser.name}</span>
-                        </div>
-                        <div className="page__img">
-                            <img src={infoUser.image ? infoUser.image : urlPhoto} alt="photo" />
                         </div>
                         <button onClick={clickLogOut} className="btn__page btn__table">Выход</button>
                     </div>

@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 
 import { ILoginAPI } from '../../models/type';
 
-import { davDamerAPI } from '../../store/api/DavdamerAPI';
+import { api } from '../../store/api/api';
 
 import style from "./LoginPage.module.css"
 
@@ -21,7 +21,7 @@ const LoginPage = () => {
     const fromPage = location.state?.from?.pathname || '/';
 
 
-    const [auth] = davDamerAPI.useFetchLoginMutation();
+    const [auth] = api.useFetchLoginMutation();
 
     const [error, setError] = useState(false);
 

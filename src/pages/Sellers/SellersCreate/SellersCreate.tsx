@@ -4,7 +4,7 @@ import { useRef } from "react"
 import SellersForm from "../../../components/SellersForm/SellersForm";
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 import ErrorPages from "../../Error/ErrorPages";
 interface IProps {
     edit: boolean
@@ -19,7 +19,7 @@ function SellersCreate(props: IProps) {
         if (btnSubmitRef.current) { btnSubmitRef.current.click() }
     }
 
-    const [addSeller, { isError: addError }] = davDamerAPI.useFetchCreateSellerMutation();
+    const [addSeller, { isError: addError }] = api.useFetchCreateSellerMutation();
     if (addError) return <ErrorPages></ErrorPages>
     return (
         <>

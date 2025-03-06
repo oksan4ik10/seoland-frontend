@@ -6,7 +6,7 @@ import style from "./DirectoryMain.module.css";
 import { paramsFilterAttr } from "../paramsFilterAttr";
 
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 import { useMatchMedia } from "../../../hooks/use-match-media";
 
 
@@ -29,7 +29,7 @@ function DirectoryMain() {
     const codeAttr: string = useAppSelector((store) => store.attrReducer).attr;
     const dispatch = useAppDispatch();
 
-    const { data, error, isLoading } = davDamerAPI.useFetchGetAttributesQuery({ code: codeAttr });
+    const { data, error, isLoading } = api.useFetchGetAttributesQuery({ code: codeAttr });
 
     const [dataFilter, setDataFilter] = useState(paramsFilterAttr);
 
@@ -57,7 +57,7 @@ function DirectoryMain() {
 
 
 
-    const [deleteProduct] = davDamerAPI.useFetchDelAttrMutation();
+    const [deleteProduct] = api.useFetchDelAttrMutation();
 
     const [idDelProduct, setIdDelProduct] = useState<number>();
     const clickDel = (id: number) => {

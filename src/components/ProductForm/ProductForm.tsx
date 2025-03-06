@@ -13,7 +13,7 @@ import urlIconProduct from "../../assets/images/productIcon.svg"
 import urlFileShowImg from "../../assets/images/default-show.png"
 import { IAttrSize, IProduct } from "../../models/type";
 
-import { davDamerAPI } from "../../store/api/DavdamerAPI";
+import { api } from "../../store/api/api";
 import Filter from "../Filter/Filter";
 
 import ErrorPages from "../../pages/Error/ErrorPages";
@@ -61,7 +61,7 @@ function ProductForm(props: IProps) {
 
 
 
-    const { data: attrValues, error: errorAttrValues, isLoading: isAttrValues } = davDamerAPI.useGetEnumsAttrQuery()
+    const { data: attrValues, error: errorAttrValues, isLoading: isAttrValues } = api.useGetEnumsAttrQuery()
     const dataArea: any = {
         location: data && data.location ? data.location : "Не заполнено",
         categories: data ? data.sub_categories[0].full_name.toLocaleString() : "",
@@ -77,7 +77,7 @@ function ProductForm(props: IProps) {
     }
 
 
-    const { data: categories, error: errorCategory, isLoading: isCategory } = davDamerAPI.useFetchGetCategoryQuery();
+    const { data: categories, error: errorCategory, isLoading: isCategory } = api.useFetchGetCategoryQuery();
     const [idCategoryName, setIdCategoryName] = useState(data?.sub_categories[0].full_name);
     const [titleCategoryChildren, setTitleCategoryChildren] = useState(dataArea.categoryChildren)
 
@@ -93,7 +93,7 @@ function ProductForm(props: IProps) {
     }
 
 
-    const { data: sellers, error: errorSellers, isLoading: isSellers } = davDamerAPI.useFetchAllSellersQuery({ ordering: "" });
+    const { data: sellers, error: errorSellers, isLoading: isSellers } = api.useFetchAllSellersQuery({ ordering: "" });
     const filterSellers = {
         title: dataArea.seller ? dataArea.seller : "Выберите продавца",
         nameFilter: "seller",

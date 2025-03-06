@@ -3,8 +3,8 @@ import { useState } from "react";
 import style from "./ProductsPage.module.css";
 
 import TablePage from "../../../components/TablePage/TablePage";
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
-import { IParamsAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
+import { IParamsAPI } from "../../../store/api/api";
 
 
 
@@ -15,7 +15,7 @@ function ProductsPage() {
     });
 
 
-    const { data, error, isLoading } = davDamerAPI.useFetchAllProductsQuery(paramsAPI);
+    const { data, error, isLoading } = api.useFetchAllProductsQuery(paramsAPI);
     const setParamsFilter = (key: string, value: string | number) => {
         setParamsAPI(() => {
             const obj = Object.assign({}, paramsAPI);
@@ -29,7 +29,7 @@ function ProductsPage() {
 
     }
 
-    const [delProduct] = davDamerAPI.useFetchDelProductMutation();
+    const [delProduct] = api.useFetchDelProductMutation();
 
 
 

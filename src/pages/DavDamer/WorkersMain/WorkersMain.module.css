@@ -1,6 +1,6 @@
 .row {
     grid-gap: 1%;
-    grid-template-columns: 4% 20% 20% 20% 16% 16%;
+    grid-template-columns: 24% 24% 20% 16% 16%;
 }
 
 .col:last-child {

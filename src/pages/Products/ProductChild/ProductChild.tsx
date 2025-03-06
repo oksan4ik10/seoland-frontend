@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom'
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 import ErrorPages from '../../Error/ErrorPages';
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
@@ -14,8 +14,8 @@ interface IProps {
 function AddProductChild(props: IProps) {
     const { id, color } = useParams();
     const { edit } = props;
-    const { data, error, isLoading } = davDamerAPI.useFetchGetProductQuery(id ? id : "-2");
-    const [addProductChild, { isError: editError }] = davDamerAPI.useFetchCreateChildProductMutation();
+    const { data, error, isLoading } = api.useFetchGetProductQuery(id ? id : "-2");
+    const [addProductChild, { isError: editError }] = api.useFetchCreateChildProductMutation();
 
 
     const btnSubmitRef = useRef<HTMLInputElement>(null)

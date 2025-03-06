@@ -1,3 +1,17 @@
+export interface IWorker {
+    _id: string,
+    name: string,
+    last_name: string,
+    image: string,
+    is_admin: boolean,
+    role: IRole | null,
+    roleName: string,
+    login: string
+
+}
+
+
+//==========OLD
 interface IDavdamer {
     id: number;
     name: string;
@@ -139,6 +153,8 @@ export interface IDavdamerInfo extends IUser {
     phone_number: string
 
 }
+
+
 export interface ILoginResponse {
     data: {
         access_token: string,

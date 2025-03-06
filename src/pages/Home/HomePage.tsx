@@ -5,7 +5,7 @@ import moment from "moment";
 
 
 import Pages from "../../components/PagesHead/PagesHead";
-import { davDamerAPI } from "../../store/api/DavdamerAPI";
+import { api } from "../../store/api/api";
 import Filter from "../../components/Filter/Filter";
 
 
@@ -89,11 +89,11 @@ function HomePage() {
         sub_category: ""
     })
 
-    const { data: dataFilters, error: errorFilter, isLoading: isLoadingFilter } = davDamerAPI.useGetFiltersAnalyticsQuery();
-    const { data, error, isLoading } = davDamerAPI.useGetDataAnalyticsQuery(valuesFilter);
-    const { data: diagramDavdamer, error: errorDavdamer, isLoading: isLoadingDavdamer } = davDamerAPI.useGetDataDiagramDavdamerQuery(valuesFilter)
-    const { data: diagramSeller, error: errorSeller, isLoading: isLoadingSeller } = davDamerAPI.useGetDataDiagramSellerQuery(valuesFilter)
-    const { data: diagramDate, error: errorDate, isLoading: isLoadingDate } = davDamerAPI.useGetDataDiagramDaysQuery(valuesFilter)
+    const { data: dataFilters, error: errorFilter, isLoading: isLoadingFilter } = api.useGetFiltersAnalyticsQuery();
+    const { data, error, isLoading } = api.useGetDataAnalyticsQuery(valuesFilter);
+    const { data: diagramDavdamer, error: errorDavdamer, isLoading: isLoadingDavdamer } = api.useGetDataDiagramDavdamerQuery(valuesFilter)
+    const { data: diagramSeller, error: errorSeller, isLoading: isLoadingSeller } = api.useGetDataDiagramSellerQuery(valuesFilter)
+    const { data: diagramDate, error: errorDate, isLoading: isLoadingDate } = api.useGetDataDiagramDaysQuery(valuesFilter)
     const filtersData = {
         category: {
             title: "Категория",

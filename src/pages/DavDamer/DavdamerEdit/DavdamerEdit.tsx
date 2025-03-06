@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom'
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
 
@@ -15,8 +15,8 @@ function DavdamerEdit() {
 
     if (!id) return <ErrorPages></ErrorPages>
 
-    const { data, isLoading } = davDamerAPI.useFetchGetDavdamerQuery(id);
-    const [editDavdam] = davDamerAPI.useFetchEditDavdamerMutation();
+    const { data, isLoading } = api.useFetchGetDavdamerQuery(id);
+    const [editDavdam] = api.useFetchEditDavdamerMutation();
     console.log(data);
 
 

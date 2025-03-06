@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom'
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 import ErrorPages from '../../Error/ErrorPages';
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
@@ -15,10 +15,10 @@ function ProductsShowEdit(props: IProps) {
     const { id } = useParams();
 
     const { edit, nameFunc } = props;
-    const { data, error, isLoading } = davDamerAPI.useFetchGetOrderQuery(id ? id : "-2");
+    const { data, error, isLoading } = api.useFetchGetOrderQuery(id ? id : "-2");
 
 
-    const [editOrder, { isError: editError }] = davDamerAPI.useFetchEditOrderMutation();
+    const [editOrder, { isError: editError }] = api.useFetchEditOrderMutation();
 
     const btnSubmitRef = useRef<HTMLInputElement>(null)
     const clickSave = () => {

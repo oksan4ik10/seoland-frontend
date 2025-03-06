@@ -1,7 +1,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram } from '../../models/type'
+import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker } from '../../models/type'
 import { statusOrder } from '../../models/type';
 
 import { RootState } from '../store';
@@ -26,8 +26,8 @@ interface IParamDeleteImg {
     imageID: number
 }
 
-export const davDamerAPI = createApi({
-    reducerPath: 'davDamerAPI',
+export const api = createApi({
+    reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:4000/api', prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).userReducer.access_token;
@@ -38,8 +38,65 @@ export const davDamerAPI = createApi({
         },
     }),
 
-    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics"],
+    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers"],
     endpoints: (build) => ({
+
+        getWorkers: build.query<IWorker[], IParamsAPI>({
+            query: (args) => ({
+                url: `/worker`,
+                params: { ...args }
+
+            }),
+            transformResponse: ((res: IWorker[]) => {
+                const newRes = res.map((item) => {
+                    item.roleName = item.role?.name || '';
+                    return item
+                })
+
+                return newRes
+            }),
+
+            providesTags: ['Workers']
+        }),
+        delWorker: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/worker/${body.id}/`,
+                    method: 'DELETE',
+                })
+            },
+            invalidatesTags: ['Workers']
+        }),
+
+        fetchDelDavdamer: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/admin/davdamer/${body.id}/`,
+                    method: 'DELETE',
+                })
+            },
+            invalidatesTags: ['Davdamers']
+        }),
+
+        fetchGetDavdamers: build.query<IDavdamerInfo[], void>({
+            query:
+                () => {
+                    return ({ url: `/admin/davdamer/` })
+                },
+            transformResponse: ((res: IDavdamerInfo[]) => {
+                const newRes = res.map((item) => {
+                    item.fullName = `${item.last_name + " "} ${item.first_name}`;
+                    return item
+                })
+
+                return newRes
+            }),
+            providesTags: ['Davdamers']
+
+        }),
+
+
+
         fetchAllSellers: build.query<ISeller[], IParamsAPI>({
             query: (args) => ({
                 url: `/davdamer/seller/`,
@@ -220,22 +277,7 @@ export const davDamerAPI = createApi({
                 }
 
         }),
-        fetchGetDavdamers: build.query<IDavdamerInfo[], void>({
-            query:
-                () => {
-                    return ({ url: `/admin/davdamer/` })
-                },
-            transformResponse: ((res: IDavdamerInfo[]) => {
-                const newRes = res.map((item) => {
-                    item.fullName = `${item.last_name + " "} ${item.first_name}`;
-                    return item
-                })
 
-                return newRes
-            }),
-            providesTags: ['Davdamers']
-
-        }),
         fetchCreateDavdamer: build.mutation<IParamsMutation, IParamsMutation>({
             query: (body) => {
                 return ({
@@ -269,15 +311,7 @@ export const davDamerAPI = createApi({
             },
             invalidatesTags: ['Davdamers']
         }),
-        fetchDelDavdamer: build.mutation<IParamsMutation, IParamsMutation>({
-            query: (body) => {
-                return ({
-                    url: `/admin/davdamer/${body.id}/`,
-                    method: 'DELETE',
-                })
-            },
-            invalidatesTags: ['Davdamers']
-        }),
+
 
         getChildrenProduct: build.query<string, string>({
             query:

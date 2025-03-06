@@ -11,7 +11,7 @@ import urlIconPhoto from "../../assets/images/photoIcon.svg"
 
 import { IProduct } from "../../models/type";
 
-import { davDamerAPI } from "../../store/api/DavdamerAPI";
+import { api } from "../../store/api/api";
 import Filter from "../Filter/Filter";
 
 import ErrorPages from "../../pages/Error/ErrorPages";
@@ -63,7 +63,7 @@ function AddProductForm(props: IProps) {
     })
 
 
-    const { data: attrValues, error: errorAttrValues, isLoading: isAttrValues } = davDamerAPI.useGetEnumsAttrQuery()
+    const { data: attrValues, error: errorAttrValues, isLoading: isAttrValues } = api.useGetEnumsAttrQuery()
     const dataArea: any = {
         categories: data ? data.sub_categories[0].full_name.toLocaleString() : "",
         categoryChildren: data?.sub_categories[0].child ? data.sub_categories[0].child.name : "",

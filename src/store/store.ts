@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { davDamerAPI } from './api/DavdamerAPI';
+import { api } from './api/api';
 
 import userReducer from './reducer/userReducer';
 import attrReducer from './reducer/attrReducer';
@@ -10,7 +10,7 @@ import attrReducer from './reducer/attrReducer';
 const rootReducer = combineReducers({
     userReducer,
     attrReducer,
-    [davDamerAPI.reducerPath]: davDamerAPI.reducer
+    [api.reducerPath]: api.reducer
 });
 
 export const setupStore = () => {
@@ -20,7 +20,7 @@ export const setupStore = () => {
             getDefaultMiddleware({
                 serializableCheck: false,
             })
-                .concat(davDamerAPI.middleware)
+                .concat(api.middleware)
     });
 };
 

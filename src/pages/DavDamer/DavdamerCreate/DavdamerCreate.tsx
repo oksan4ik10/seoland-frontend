@@ -2,7 +2,7 @@ import { useRef } from "react";
 import CreateHead from "../../../components/CreateHead/CreateHead";
 import DavdamerForm from "../../../components/DavdamerForm/DavdamerForm";
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 
 
 function DavdamerCreate() {
@@ -13,7 +13,7 @@ function DavdamerCreate() {
 
     }
 
-    const [createDavdam] = davDamerAPI.useFetchCreateDavdamerMutation();
+    const [createDavdam] = api.useFetchCreateDavdamerMutation();
 
 
 

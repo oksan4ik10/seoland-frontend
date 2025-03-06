@@ -1,24 +1,24 @@
 
 import { useState } from "react";
-import style from "./DavdamerMain.module.css";
+import style from "./WorkersMain.module.css";
 
 import TablePage from "../../../components/TablePage/TablePage";
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
-import { IParamsAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
+import { IParamsAPI } from "../../../store/api/api";
 
 
 
-function DavdamerMain() {
+function WorkersMain() {
     const [paramsAPI, setParamsAPI] = useState<IParamsAPI>({
         ordering: ""
 
     });
 
 
-    const { data, error, isLoading } = davDamerAPI.useFetchGetDavdamersQuery();
+    const { data, error, isLoading } = api.useGetWorkersQuery(paramsAPI);
 
 
-    const [delDavdamer] = davDamerAPI.useFetchDelDavdamerMutation();
+    const [delWorker] = api.useDelWorkerMutation();
 
     const setParamsFilter = (key: string, value: string | number) => {
         setParamsAPI(() => {
@@ -35,7 +35,7 @@ function DavdamerMain() {
     if (isLoading) return (<p>Загрузка данных</p>)
     if (error) return (<p>Ошибка</p>)
 
-    return (data && <TablePage setParamsFilter={setParamsFilter} style={style} nameTable="davdamers" davdamers={data} delItem={delDavdamer} lengthRow={data.length}></TablePage>)
+        return (data && <TablePage setParamsFilter={setParamsFilter} style={style} nameTable="workers" workers={data} delItem={delWorker} lengthRow={data.length}></TablePage>)
 }
 
-export default DavdamerMain
+export default WorkersMain

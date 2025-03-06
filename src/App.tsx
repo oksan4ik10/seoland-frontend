@@ -19,7 +19,8 @@ import ProductsCreate from "./pages/Products/ProductsCreate/ProductsCreate";
 import AddProductChild from "./pages/Products/AddProductChild/AddProductChild";
 import ProductChild from "./pages/Products/ProductChild/ProductChild";
 
-import DavdamerMain from "./pages/DavDamer/DavdamerMain/DavdamerMain";
+
+import WorkersMain from "./pages/DavDamer/WorkersMain/WorkersMain";
 import DavdamerCreate from "./pages/DavDamer/DavdamerCreate/DavdamerCreate";
 import DavdamerEdit from "./pages/DavDamer/DavdamerEdit/DavdamerEdit";
 
@@ -36,14 +37,14 @@ import './App.css'
 
 
 import { useAppDispatch } from "./store/store";
-import { setToken, setIsAdmin } from "./store/reducer/userReducer";
+import {setUser } from "./store/reducer/userReducer";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<LayoutMenu />}>
       <Route index element={<RequireAuth><HomePage /></RequireAuth>}></Route>
 
-      <Route path="davdamers" element={<RequireAuth><DavdamerMain /></RequireAuth>}></Route>
+      <Route path="workers" element={<RequireAuth><WorkersMain /></RequireAuth>}></Route>
       <Route path="davdamers/create" element={<RequireAuth><DavdamerCreate /></RequireAuth>}></Route>
       <Route path="davdamers/edit/:id" element={<RequireAuth><DavdamerEdit /></RequireAuth>}></Route>
 
@@ -77,13 +78,11 @@ const router = createBrowserRouter(
 
 function App() {
   const dispatch = useAppDispatch();
-  const localStorageToken = localStorage.getItem("token");
-  const token = localStorageToken ? localStorageToken : "";
 
-  const isAdmin = localStorage.getItem("isAdmin") ? localStorage.getItem("isAdmin") : "";
   useEffect(() => {
-    dispatch(setToken(token))
-    dispatch(setIsAdmin(Boolean(isAdmin)))
+    const localUser = localStorage.getItem("user")
+    const user = localUser ? JSON.parse(localUser) : null;
+    dispatch(setUser(user))
   }, [])
 
   // useEffect(() => {

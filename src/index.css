@@ -8,7 +8,7 @@
 
 .os-scrollbar {
   --os-track-bg: #D4E0FA73;
-  --os-handle-bg: #3977F1;
+  --os-handle-bg: #623DB5;
   --os-handle-bg-active: #7D7D7D;
   --os-handle-bg-hover: #7D7D7D;
 }
@@ -37,7 +37,7 @@ button {
   --color-black: #000;
   --color: #7D7D7D;
   --color-help: #C0C0C0;
-  --icon-active: #3977F1;
+  --icon-active: #623DB5;
   --icon-disable: #7D7D7D;
   --icon-bg: #EEEEEE;
   --os-scrollbar-handle: red;
@@ -56,7 +56,7 @@ button {
   -moz-osx-font-smoothing: grayscale;
 
   --scrollbar-track-color: #D4E0FA;
-  --scrollbar-color: #3977F1;
+  --scrollbar-color: #623DB5;
   --scrollbar-width: 2px;
 
   --scrollbar-size: .375rem;

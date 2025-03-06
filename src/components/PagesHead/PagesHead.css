@@ -17,12 +17,13 @@
 
 .page__user {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto;
 }
 
 
 
 .page__name {
+    max-width: 200px;
     display: flex;
     flex-direction: column;
     margin-top: 10px;
@@ -34,7 +35,6 @@
     font-weight: 300;
     line-height: 125%;
     color: var(--color-title);
-    grid-column: 1/2;
 
 }
 
@@ -46,7 +46,6 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    grid-template-columns: 2/3;
     justify-self: center;
     align-self: center;
 }

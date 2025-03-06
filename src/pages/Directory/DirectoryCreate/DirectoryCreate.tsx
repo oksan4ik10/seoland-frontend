@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
 
@@ -13,7 +13,7 @@ function DirectoryCreate() {
     const btnSubmitRef = useRef<HTMLInputElement>(null)
 
 
-    const [createAttr] = davDamerAPI.useFetchCreateAttrMutation();
+    const [createAttr] = api.useFetchCreateAttrMutation();
     const [sendFormFilters, setSendFormFilters] = useState(false);
 
     const clickSave = () => {

@@ -3,8 +3,8 @@ import { useState } from "react";
 import style from "./OrdersPage.module.css";
 
 import TablePage from "../../../components/TablePage/TablePage";
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
-import { IParamsAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
+import { IParamsAPI } from "../../../store/api/api";
 
 import { statusOrder } from "../../../models/type";
 
@@ -15,7 +15,7 @@ function OrdersPage() {
     });
 
 
-    const { data, error, isLoading } = davDamerAPI.useFetchAllOrdersQuery(paramsAPI);
+    const { data, error, isLoading } = api.useFetchAllOrdersQuery(paramsAPI);
     console.log(data);
 
 

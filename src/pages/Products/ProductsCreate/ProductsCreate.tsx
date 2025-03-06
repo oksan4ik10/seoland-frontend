@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import CreateHead from "../../../components/CreateHead/CreateHead";
 import ProductForm from "../../../components/ProductForm/ProductForm";
 
-import { davDamerAPI } from "../../../store/api/DavdamerAPI";
+import { api } from "../../../store/api/api";
 import ErrorPages from "../../Error/ErrorPages";
 
 interface IProps {
@@ -20,7 +20,7 @@ function ProductsCreate(props: IProps) {
         setSendFormFilters(true)
     }
 
-    const [createProduct, { isError: createError }] = davDamerAPI.useFetchCreateProductMutation();
+    const [createProduct, { isError: createError }] = api.useFetchCreateProductMutation();
 
     if (createError) return <ErrorPages></ErrorPages>
 

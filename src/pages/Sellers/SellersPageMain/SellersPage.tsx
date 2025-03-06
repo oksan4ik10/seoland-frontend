@@ -4,7 +4,7 @@ import { useState } from "react";
 import style from "./SellersPage.module.css";
 
 import TablePage from "../../../components/TablePage/TablePage";
-import { davDamerAPI, IParamsAPI } from "../../../store/api/DavdamerAPI";
+import { api, IParamsAPI } from "../../../store/api/api";
 
 
 function SellersPage() {
@@ -14,7 +14,7 @@ function SellersPage() {
     });
 
 
-    const { data: sellersApi, error, isLoading } = davDamerAPI.useFetchAllSellersQuery(paramsAPI);
+    const { data: sellersApi, error, isLoading } = api.useFetchAllSellersQuery(paramsAPI);
     const setParamsFilter = (key: string, value: string | number) => {
         setParamsAPI(() => {
             const obj = Object.assign({}, paramsAPI);
