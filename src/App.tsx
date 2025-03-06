@@ -20,9 +20,9 @@ import AddProductChild from "./pages/Products/AddProductChild/AddProductChild";
 import ProductChild from "./pages/Products/ProductChild/ProductChild";
 
 
-import WorkersMain from "./pages/DavDamer/WorkersMain/WorkersMain";
-import DavdamerCreate from "./pages/DavDamer/DavdamerCreate/DavdamerCreate";
-import DavdamerEdit from "./pages/DavDamer/DavdamerEdit/DavdamerEdit";
+import WorkersMain from "./pages/Workers/WorkersMain/WorkersMain";
+import DavdamerCreate from "./pages/Workers/WorkerCreate/DavdamerCreate";
+import DavdamerEdit from "./pages/Workers/WorkerEdit/DavdamerEdit";
 
 import DirectoryMain from "./pages/Directory/DirectoryMain/DirectoryMain";
 import DirectoryCreate from "./pages/Directory/DirectoryCreate/DirectoryCreate";
