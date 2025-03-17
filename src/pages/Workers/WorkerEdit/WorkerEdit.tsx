@@ -5,24 +5,18 @@ import { api } from "../../../store/api/api";
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
 
-import DavdamerForm from '../../../components/DavdamerForm/DavdamerForm';
 import ErrorPages from '../../Error/ErrorPages';
+import WorkerForm from '../../../components/WorkerForm/WorkerForm';
 
 
-function DavdamerEdit() {
+function WorkerEdit() {
     const { id } = useParams();
     const btnSubmitRef = useRef<HTMLInputElement>(null)
 
     if (!id) return <ErrorPages></ErrorPages>
 
-    const { data, isLoading } = api.useFetchGetDavdamerQuery(id);
-    const [editDavdam] = api.useFetchEditDavdamerMutation();
-    console.log(data);
-
-
-
-
-
+    const { data, isLoading } = api.useGetWorkerQuery(id);
+    const [editDavdam] = api.useEditWorkerMutation();
 
     const clickSave = () => {
         if (btnSubmitRef.current) { btnSubmitRef.current.click() }
@@ -31,11 +25,11 @@ function DavdamerEdit() {
 
     return (
         <>
-            <CreateHead title="Карточка давдамера" redirect={false} nameFunc={"save"} saveFunc={clickSave} namePage="davdamers" />
-            <DavdamerForm refBtn={btnSubmitRef} funcRequest={editDavdam} id={id} data={data}></DavdamerForm>
+            <CreateHead title="Карточка сотрудника" redirect={false} nameFunc={"save"} saveFunc={clickSave} namePage="workers" />
+            <WorkerForm refBtn={btnSubmitRef} funcRequest={editDavdam} id={id} data={data}></WorkerForm>
 
         </>
     )
 }
 
-export default DavdamerEdit
+export default WorkerEdit

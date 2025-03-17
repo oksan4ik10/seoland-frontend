@@ -20,8 +20,8 @@ import ProductsCreate from "./pages/Products/ProductsCreate/ProductsCreate";
 
 
 import WorkersMain from "./pages/Workers/WorkersMain/WorkersMain";
-import DavdamerCreate from "./pages/Workers/WorkerCreate/DavdamerCreate";
-import DavdamerEdit from "./pages/Workers/WorkerEdit/DavdamerEdit";
+import WorkerCreate from "./pages/Workers/WorkerCreate/WorkerCreate";
+import WorkerEdit from "./pages/Workers/WorkerEdit/WorkerEdit";
 
 import DirectoryMain from "./pages/Directory/DirectoryMain/DirectoryMain";
 import DirectoryCreate from "./pages/Directory/DirectoryCreate/DirectoryCreate";
@@ -45,8 +45,8 @@ const router = createBrowserRouter(
       <Route index element={<RequireAuth><HomePage /></RequireAuth>}></Route>
 
       <Route path="workers" element={<RequireAuth><WorkersMain /></RequireAuth>}></Route>
-      <Route path="davdamers/create" element={<RequireAuth><DavdamerCreate /></RequireAuth>}></Route>
-      <Route path="davdamers/edit/:id" element={<RequireAuth><DavdamerEdit /></RequireAuth>}></Route>
+      <Route path="workers/create" element={<RequireAuth><WorkerCreate /></RequireAuth>}></Route>
+      <Route path="workers/:id" element={<RequireAuth><WorkerEdit /></RequireAuth>}></Route>
 
       <Route path="sellers" element={<RequireAuth><SellersPage /></RequireAuth>}></Route>
 

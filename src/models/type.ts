@@ -6,7 +6,10 @@ export interface IWorker {
     is_admin: boolean,
     role: IRole | null,
     roleName: string,
-    login: string
+    login: string,
+    password: string,
+    salary: number | undefined,
+    idRole: string
 
 }
 export interface IProject {
@@ -37,6 +40,12 @@ export interface ITask {
     workerName: string,
     projectName: string,
 
+
+}
+export interface IRole {
+    _id: string,
+    code: string,
+    name: string,
 
 }
 //==========OLD
@@ -367,12 +376,7 @@ export interface IDataDiagram {
 
 //NEW INTERFASES
 
-export interface IRole {
-    _id: string,
-    code: string,
-    name: string,
 
-}
 
 
 export interface IUser {

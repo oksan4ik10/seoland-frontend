@@ -1,7 +1,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask } from '../../models/type'
+import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask, IRole } from '../../models/type'
 import { statusOrder } from '../../models/type';
 
 import { RootState } from '../store';
@@ -38,7 +38,7 @@ export const api = createApi({
         },
     }),
 
-    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers", 'Projects', "Tasks"],
+    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers", 'Projects', "Tasks", "Roles"],
     endpoints: (build) => ({
 
         getWorkers: build.query<IWorker[], IParamsAPI>({
@@ -57,6 +57,39 @@ export const api = createApi({
             }),
 
             providesTags: ['Workers']
+        }),
+        getWorker: build.query<IWorker, string>({
+            query: (id) => ({
+                url: `/worker/${id}`,
+
+            }),
+            transformResponse: ((res: IWorker) => {
+
+                res.roleName = res.role?.name || '';
+                return res
+            }),
+
+            providesTags: ['Workers']
+        }),
+        createWorker: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/worker`,
+                    method: 'POST',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Workers']
+        }),
+        editWorker: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/worker/${body.id}`,
+                    method: 'PATCH',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Workers']
         }),
         getProjects: build.query<IProject[], IParamsAPI>({
             query: (args) => ({
@@ -96,6 +129,14 @@ export const api = createApi({
 
             providesTags: ['Tasks']
         }),
+        getRoles: build.query<IRole[], void>({
+            query: () => ({
+                url: `/role`,
+
+            }),
+
+            providesTags: ['Roles']
+        }),
         delWorker: build.mutation<IParamsMutation, IParamsMutation>({
             query: (body) => {
                 return ({
@@ -105,6 +146,7 @@ export const api = createApi({
             },
             invalidatesTags: ['Workers']
         }),
+
 
         fetchDelDavdamer: build.mutation<IParamsMutation, IParamsMutation>({
             query: (body) => {
