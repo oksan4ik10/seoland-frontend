@@ -1,6 +1,6 @@
 .row {
-    grid-template-columns: 15% 18% 21% 18% 15% 8%;
-    grid-row-gap: 1%;
+    grid-gap: 1%;
+    grid-template-columns: 16% 16% 10% 10% 10% 8% 16% 8%;
 }
 
 .col {
@@ -25,4 +25,11 @@
     padding: 2px 12px;
     border-radius: 8px;
     width: max-content;
+}
+.col__seller {
+    color: var(--icon-active);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 125%;
+    -webkit-line-clamp: 2;
 }

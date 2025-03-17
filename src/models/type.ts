@@ -18,9 +18,27 @@ export interface IProject {
     idResponsibleUser: string,
     desc: string,
     worker: IWorker,
-    workerName: string
+    workerName: string,
+    id: string
 }
+export interface ITask {
 
+    _id: string,
+    name: string,
+    date_start: Date,
+    date_PlanEnd: Date,
+    timePlan: number,
+    IDworker: string,
+    IDproject: string,
+    status: string,
+    desc: string,
+    worker: IWorker
+    project: IProject
+    workerName: string,
+    projectName: string,
+
+
+}
 //==========OLD
 interface IDavdamer {
     id: number;
@@ -241,14 +259,14 @@ export const statusOrder: IStatusOrder = {
 }
 
 export const statusOrderColor: IStatusOrder = {
-    NEW: "#8D989E",
+    "Новый": "#8D989E",
     PAID: "#B37B00",
-    PROCESSING: "#FFC448",
+    "В процессе": "#FFC448",
     SENT: "#009150",
     DELIVERED: "#004B2A",
     REFUND: "#9B2D30",
-    CANCELLED: "#D24950",
-    READY: "#D4E0FA"
+    "Отменен": "#D24950",
+    "Завершен": "#D4E0FA"
 }
 
 export interface IAttributesValues {

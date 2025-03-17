@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
-import OrdersPage from "./pages/Orders/OrdersPageMain/OrdersPage";
+import OrdersPage from "./pages/Tasks/TasksMain/TasksPage";
 import ProjectsPage from "./pages/Projects/ProjectsMain/ProjectsPage"; 
 import SellersPage from "./pages/Sellers/SellersPageMain/SellersPage";
 import ErrorPages from "./pages/Error/ErrorPages";

@@ -8,10 +8,9 @@ import styles from "./TablePage.module.css";
 
 
 import { useMatchMedia } from "../../hooks/use-match-media";
-import { IDavdamerInfo, IOrder, IProject, ISeller, IWorker } from "../../models/type";
+import { IDavdamerInfo, IProject, ISeller, ITask, IWorker } from "../../models/type";
 import Pages from "../PagesHead/PagesHead";
 
-import { statusOrder } from "../../models/type";
 import { statusOrderColor } from "../../models/type";
 import Filter from "../Filter/Filter";
 
@@ -49,7 +48,7 @@ interface ITables {
     davdamers: ITable,
     sellers: ITable,
     projects: ITable,
-    orders: ITable,
+    tasks: ITable,
     workers: ITable
 }
 
@@ -80,11 +79,11 @@ const dataTables: ITables = {
         countRow: 4,
         filterParams: [{ title: "Дата начала проекта", filter: "date_start", type: "date" }]
     },
-    orders: {
-        title: "Заказы",
-        nameColumns: [{ nameColumn: "№ заказа", nameResponse: "number" }, { nameColumn: "Дата и время", nameResponse: "date_placed" }, { nameColumn: "Статус", nameResponse: "status" }, { nameColumn: "ID Клиента", nameResponse: "user" }, { nameColumn: "Сумма", nameResponse: "total" }],
+    tasks: {
+        title: "Задачи",
+        nameColumns: [{ nameColumn: "Наименование", nameResponse: "name" }, { nameColumn: "Проект", nameResponse: "projectName" },{ nameColumn: "Статус", nameResponse: "status" }, { nameColumn: "Дата начала", nameResponse: "date_start" }, { nameColumn: "Дата окончания по плану", nameResponse: "date_PlanEnd" }, { nameColumn: "Время по плану", nameResponse: "timePlan" }, { nameColumn: "Сотрудник", nameResponse: "workerName" }],
         countRow: 4,
-        filterParams: [{ title: "Статус", filter: "statusName" }, { title: "Дата заказа", filter: "date", type: "date" }]
+        filterParams: [{ title: "Статус", filter: "status" }, { title: "Проект", filter: "project", id: true }]
     },
 
 }
@@ -93,12 +92,12 @@ export interface IDataFilter {
     [key: string]: any,
 }
 
-type TNameTable = "sellers" | "projects" | "orders" | "davdamers"|"workers"
+type TNameTable = "sellers" | "projects" | "tasks" | "davdamers"|"workers"
 interface IStyle { [key: string]: string }
 interface IProps {
     nameTable: TNameTable,
     sellers?: ISeller[],
-    orders?: IOrder[],
+    tasks?: ITask[],
     projects?: IProject[],
     davdamers?: IDavdamerInfo[],
     workers?:IWorker[],
@@ -110,7 +109,7 @@ interface IProps {
 }
 
 function TablePage(props: IProps) {
-    const { delItem, nameTable, orders, workers, style, lengthRow, projects, setParamsFilter, davdamers } = props;
+    const { delItem, nameTable, tasks, workers, style, lengthRow, projects, setParamsFilter, davdamers } = props;
 
 
     const [arrRowActive, setArrRowActive] = useState<boolean[]>(Array(lengthRow).fill(false));
@@ -164,7 +163,7 @@ function TablePage(props: IProps) {
             let arr: any[] = [];
             if (workers) arr = getElemArrFilters(workers, item)
             if (projects) arr = getElemArrFilters(projects, item)
-            if (orders) arr = getElemArrFilters(orders, item)
+            if (tasks) arr = getElemArrFilters(tasks, item)
             const type = item.type ? item.type : "";
 
             return Object.assign({ type: type }, { title: title }, { nameFilter: keyFilter }, { [keyFilter]: [...arr] }, { id: item.id })
@@ -282,7 +281,7 @@ function TablePage(props: IProps) {
                 </div>
                 {((workers && workers.length === 0) || (projects && projects.length === 0)) && <p className={styles.text}>Данные не найдены. <span onClick={cancelSearch}>Сбросить поиск</span></p>}
 
-                {((workers && workers.length > 0) || (davdamers && davdamers.length > 0) || (projects && projects.length > 0) || (orders && orders.length > 0)) && <div className="tables">
+                {((workers && workers.length > 0) || (davdamers && davdamers.length > 0) || (projects && projects.length > 0) || (tasks && tasks.length > 0)) && <div className="tables">
                     <div className={"row row__title " + style.row}>
                         {nameColumns && nameColumns.map((item, index) => {
                             return <div className={"col__title " + (item.stateSort === "asc" ? "desc" : "") + " " + (item.stateSort === "none" ? "" : "active")} key={index} onClick={() => clickColumn(index)}>
@@ -354,18 +353,22 @@ function TablePage(props: IProps) {
                             </div>
                         })}
 
-                        {orders && orders.length > 0 && orders.map((item, index) => {
-                            return <div className={"row " + style.row} onClick={() => clickRow(index)} key={item.id}>
+                        {tasks && tasks.length > 0 && tasks.map((item, index) => {
+                            return <div className={"row " + style.row} onClick={() => clickRow(index)} key={item._id}>
                                 <div className={"row__bg " + ((arrRowActive && arrRowActive[index]) ? "active" : "")}></div>
-                                <div className={"col " + style.col}>{item.number}</div>
+                                <div className={"col " + style.col}>{item.name}</div>
+                                <div className={"col " + style.col+" " + style.col__seller}>{item.projectName}</div>
+                                <div className={"col " + style.col} style={{ background: statusOrderColor[item.status] }}>{item.status}</div>
                                 <div className={"col " + style.col}>
-                                    <span>{moment(item.date_placed).format("DD.MM.YYYY")}</span>
-                                    <span>{moment(item.date_placed).format("HH:mm")}</span></div>
-                                <div className={"col " + style.col} style={{ background: statusOrderColor[item.status.toUpperCase()] }}>{statusOrder[item.status.toUpperCase()]}</div>
-                                <div className={"col " + style.col}>{item.user.id}</div>
-                                <div className={"col " + style.col}>{item.total_incl_tax + " ₽"}</div>
+                                {moment(item.date_start).format("DD.MM.YYYY")}
+                                </div>
                                 <div className={"col " + style.col}>
-                                    <Link to={`/orders/${item.id}`} className="btn btn__table">
+                                {moment(item.date_PlanEnd).format("DD.MM.YYYY")}
+                                </div>
+                                <div className={"col " + style.col}>{item.timePlan}</div>
+                                <div className={"col " + style.col+" " + style.col__seller}>{item.workerName}</div>
+                                <div className={"col " + style.col}>
+                                    <Link to={`/tasks/${item._id}`} className="btn btn__table">
                                         Перейти
                                     </Link>
                                 </div>
