@@ -1,7 +1,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker } from '../../models/type'
+import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject } from '../../models/type'
 import { statusOrder } from '../../models/type';
 
 import { RootState } from '../store';
@@ -38,7 +38,7 @@ export const api = createApi({
         },
     }),
 
-    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers"],
+    tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers", 'Projects'],
     endpoints: (build) => ({
 
         getWorkers: build.query<IWorker[], IParamsAPI>({
@@ -57,6 +57,24 @@ export const api = createApi({
             }),
 
             providesTags: ['Workers']
+        }),
+        getProjects: build.query<IProject[], IParamsAPI>({
+            query: (args) => ({
+                url: `/project`,
+                params: { ...args }
+
+            }),
+            transformResponse: ((res: IProject[]) => {
+                const newRes = res.map((item) => {
+                    item.workerName = item.worker?.name || '';
+                    return item
+                })
+
+                return newRes
+            }),
+
+
+            providesTags: ['Projects']
         }),
         delWorker: build.mutation<IParamsMutation, IParamsMutation>({
             query: (body) => {

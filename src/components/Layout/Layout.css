@@ -56,15 +56,15 @@
     stroke: var(--icon-active);
 }
 
-.nav__sellers svg path,
-.nav__products svg path,
-.nav__orders svg path {
+.nav__workers svg path,
+.nav__projects svg path,
+.nav__tasks svg path {
     fill: var(--icon-disable);
 }
 
-.nav__sellers.active svg path,
-.nav__products.active svg path,
-.nav__orders.active svg path {
+.nav__workers.active svg path,
+.nav__projects.active svg path,
+.nav__tasks.active svg path {
     fill: var(--icon-active);
 }
 

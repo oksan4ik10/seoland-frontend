@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import style from "./ProductsPage.module.css";
+import style from "./ProjectsPage.module.css";
 
 import TablePage from "../../../components/TablePage/TablePage";
 import { api } from "../../../store/api/api";
@@ -8,14 +8,16 @@ import { IParamsAPI } from "../../../store/api/api";
 
 
 
-function ProductsPage() {
+function ProjectsPage() {
     const [paramsAPI, setParamsAPI] = useState<IParamsAPI>({
         ordering: ""
 
     });
 
 
-    const { data, error, isLoading } = api.useFetchAllProductsQuery(paramsAPI);
+    const { data, error, isLoading } = api.useGetProjectsQuery(paramsAPI);
+    console.log(data);
+    
     const setParamsFilter = (key: string, value: string | number) => {
         setParamsAPI(() => {
             const obj = Object.assign({}, paramsAPI);
@@ -29,7 +31,7 @@ function ProductsPage() {
 
     }
 
-    const [delProduct] = api.useFetchDelProductMutation();
+    // const [delProduct] = api.useFetchDelProductMutation();
 
 
 
@@ -39,7 +41,7 @@ function ProductsPage() {
     if (error) return (<p>Ошибка</p>)
 
     return (
-        data && <TablePage delItem={delProduct} setParamsFilter={setParamsFilter} style={style} nameTable="products" products={data} lengthRow={data.length}></TablePage>)
+        data && <TablePage setParamsFilter={setParamsFilter} style={style} nameTable="projects" projects={data} lengthRow={data.length}></TablePage>)
 }
 
-export default ProductsPage
+export default ProjectsPage

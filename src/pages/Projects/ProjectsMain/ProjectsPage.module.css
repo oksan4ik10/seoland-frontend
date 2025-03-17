@@ -1,6 +1,6 @@
 .row {
     grid-gap: 1%;
-    grid-template-columns: 36% 17% 13% 8% 9% 7%;
+    grid-template-columns: 20% 10% 18% 10% 10% 18% 8%;
 }
 
 .title,

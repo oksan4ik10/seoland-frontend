@@ -9,7 +9,17 @@ export interface IWorker {
     login: string
 
 }
-
+export interface IProject {
+    _id: string,
+    name: string,
+    date_start: Date,
+    date_end: Date,
+    timePlan: number,
+    idResponsibleUser: string,
+    desc: string,
+    worker: IWorker,
+    workerName: string
+}
 
 //==========OLD
 interface IDavdamer {

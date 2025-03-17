@@ -8,13 +8,13 @@ import styles from "./TablePage.module.css";
 
 
 import { useMatchMedia } from "../../hooks/use-match-media";
-import { IDavdamerInfo, IOrder, IProduct, ISeller, IWorker } from "../../models/type";
+import { IDavdamerInfo, IOrder, IProject, ISeller, IWorker } from "../../models/type";
 import Pages from "../PagesHead/PagesHead";
 
 import { statusOrder } from "../../models/type";
 import { statusOrderColor } from "../../models/type";
 import Filter from "../Filter/Filter";
-import TitleProduct from "../TitleProduct/TitleProduct";
+
 
 import Modal from "../Modal/Modal";
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
@@ -48,7 +48,7 @@ interface ITable {
 interface ITables {
     davdamers: ITable,
     sellers: ITable,
-    products: ITable,
+    projects: ITable,
     orders: ITable,
     workers: ITable
 }
@@ -74,11 +74,11 @@ const dataTables: ITables = {
         countRow: 4,
         filterParams: [{ title: "Страна", filter: "country" }, { title: "Город", filter: "city" }, { title: "Рынок", filter: "market" }, { title: "Адрес рынка", filter: "address" }]
     },
-    products: {
-        title: "Товары",
-        nameColumns: [{ nameColumn: "Наименование", nameResponse: "title" }, { nameColumn: "Описание", nameResponse: "description" }, { nameColumn: "Продавец", nameResponse: "seller" }, { nameColumn: "Кол-во продаж", nameResponse: "orders_count" }, { nameColumn: "Стоимость", nameResponse: "price" }],
+    projects: {
+        title: "Проекты",
+        nameColumns: [{ nameColumn: "Наименование", nameResponse: "name" }, { nameColumn: "Время по плану", nameResponse: "timePlan" }, { nameColumn: "Описание", nameResponse: "desc" }, { nameColumn: "Дата начала", nameResponse: "date_start" }, { nameColumn: "Дата окончания", nameResponse: "date_end" }, { nameColumn: "Ответственный", nameResponse: "workerName" }],
         countRow: 4,
-        filterParams: [{ title: "Категория", filter: "category", }, { title: "Продавец", filter: "nameSeller", id: true }]
+        filterParams: [{ title: "Дата начала проекта", filter: "date_start", type: "date" }]
     },
     orders: {
         title: "Заказы",
@@ -93,13 +93,13 @@ export interface IDataFilter {
     [key: string]: any,
 }
 
-type TNameTable = "sellers" | "products" | "orders" | "davdamers"|"workers"
+type TNameTable = "sellers" | "projects" | "orders" | "davdamers"|"workers"
 interface IStyle { [key: string]: string }
 interface IProps {
     nameTable: TNameTable,
     sellers?: ISeller[],
     orders?: IOrder[],
-    products?: IProduct[],
+    projects?: IProject[],
     davdamers?: IDavdamerInfo[],
     workers?:IWorker[],
     lengthRow: number,
@@ -110,7 +110,7 @@ interface IProps {
 }
 
 function TablePage(props: IProps) {
-    const { delItem, nameTable, orders, workers, style, lengthRow, products, setParamsFilter, davdamers } = props;
+    const { delItem, nameTable, orders, workers, style, lengthRow, projects, setParamsFilter, davdamers } = props;
 
 
     const [arrRowActive, setArrRowActive] = useState<boolean[]>(Array(lengthRow).fill(false));
@@ -133,6 +133,8 @@ function TablePage(props: IProps) {
         } else {
             data.map((i: any) => {
                 if (item.type === "date") return i
+                console.log(i[item.filter]);
+                
                 const elem = i[item.filter].toLocaleString();
 
                 if (arr.indexOf(elem) === -1) arr.push(elem)
@@ -161,7 +163,7 @@ function TablePage(props: IProps) {
             const keyFilter = item.filter;
             let arr: any[] = [];
             if (workers) arr = getElemArrFilters(workers, item)
-            if (products) arr = getElemArrFilters(products, item)
+            if (projects) arr = getElemArrFilters(projects, item)
             if (orders) arr = getElemArrFilters(orders, item)
             const type = item.type ? item.type : "";
 
@@ -254,14 +256,14 @@ function TablePage(props: IProps) {
             <Pages title={dataTables[nameTable].title} />
             <div className={styles.head__table + " " + (workers ? styles.sellersHead : "")}>
                 <div className={styles.btnHead}>
-                    {(davdamers || workers || products) && <Link to={`/${nameTable}/create`} className={"btn__head btn__active " + styles.btn}>
+                    {(davdamers || workers || projects) && <Link to={`/${nameTable}/create`} className={"btn__head btn__active " + styles.btn}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                             <path d="M19 12.998H13V18.998H11V12.998H5V10.998H11V4.99805H13V10.998H19V12.998Z" fill="white" />
                         </svg>
                         <span>Добавить</span>
                     </Link>}
                 </div>
-                {(workers || products) && <form className={styles.search} onSubmit={(e) => clickSearch(e)}>
+                {workers  && <form className={styles.search} onSubmit={(e) => clickSearch(e)}>
                     <input type="text" className={styles.searchTerm} placeholder="Поиск..." ref={inputSearch} />
                     <button className={styles.searchButton} type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px" fill="white"><path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z" /></svg>
@@ -278,9 +280,9 @@ function TablePage(props: IProps) {
 
                     <div className="filters"></div>
                 </div>
-                {((workers && workers.length === 0) || (products && products.length === 0)) && <p className={styles.text}>Данные не найдены. <span onClick={cancelSearch}>Сбросить поиск</span></p>}
+                {((workers && workers.length === 0) || (projects && projects.length === 0)) && <p className={styles.text}>Данные не найдены. <span onClick={cancelSearch}>Сбросить поиск</span></p>}
 
-                {((workers && workers.length > 0) || (davdamers && davdamers.length > 0) || (products && products.length > 0) || (orders && orders.length > 0)) && <div className="tables">
+                {((workers && workers.length > 0) || (davdamers && davdamers.length > 0) || (projects && projects.length > 0) || (orders && orders.length > 0)) && <div className="tables">
                     <div className={"row row__title " + style.row}>
                         {nameColumns && nameColumns.map((item, index) => {
                             return <div className={"col__title " + (item.stateSort === "asc" ? "desc" : "") + " " + (item.stateSort === "none" ? "" : "active")} key={index} onClick={() => clickColumn(index)}>
@@ -319,30 +321,35 @@ function TablePage(props: IProps) {
                             </div>
                         )}
 
-                        {products && products.length > 0 && products.map((item, index) => {
-                            return <div className={"row " + style.row} onClick={() => clickRow(index)} key={item.id}>
+                        {projects && projects.length > 0 && projects.map((item, index) => {
+                            return <div className={"row " + style.row} onClick={() => clickRow(index)} key={item._id}>
                                 <div className={"row__bg " + ((arrRowActive && arrRowActive[index]) ? "active" : "")}></div>
-                                <TitleProduct active={arrRowActive[index]} categories={item.categories} images={item.images} title={item.title} ></TitleProduct>
-                                <div className={"col " + style.col + " " + style.col__desc}>
-                                    <ClampLines text={item.description ? item.description.replace(/<\/?[a-zA-Z]+>/gi, '') : "(пусто)"} lines={3} ellipsis="" id="custom" buttons={false} />
-                                </div>
                                 <div className={"col " + style.col + " " + style.col__seller}>
-                                    <ClampLines text={item.seller.name} lines={2} ellipsis="q223" id="custom" buttons={false} />
+                                    <ClampLines text={item.name} lines={2} ellipsis="q223" id="custom" buttons={false} />
                                 </div>
                                 <div className={"col " + style.col + " " + style.col__count}>
-                                    {item.orders_count}
+                                    {item.timePlan}
+                                </div>
+                                <div className={"col " + style.col + " " + style.col__desc}>
+                                    <ClampLines text={item.desc ? item.desc.replace(/<\/?[a-zA-Z]+>/gi, '') : "(пусто)"} lines={3} ellipsis="" id="custom" buttons={false} />
                                 </div>
                                 <div className={"col " + style.col + " " + style.col__count}>
+                                    {moment(item.date_start).format("DD.MM.YYYY")}
+                                </div>
+                                <div className={"col " + style.col + " " + style.col__count}>
+                                    {moment(item.date_end).format("DD.MM.YYYY")}
+                               </div>
+                                <div className={"col " + style.col + " " + style.col__seller}>
+                                    <ClampLines text={item.workerName} lines={2} ellipsis="q223" id="custom" buttons={false} />
+                                </div>
 
-                                    {(+item.price.incl_tax).toFixed(2).toLocaleString() + " ₽"}
-                                </div>
                                 <div className={"col " + style.col}>
-                                    <Link to={`/products/${item.id}`} className="btn btn__table">
+                                    <Link to={`/products/${item._id}`} className="btn btn__table">
                                         Перейти
                                     </Link>
-                                    <button onClick={() => clickDel(item.id, "Удалить товар?")} className="btn btn__table btn__error">
+                                    {/* <button onClick={() => clickDel(item._id, "Удалить товар?")} className="btn btn__table btn__error">
                                         Удалить
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         })}

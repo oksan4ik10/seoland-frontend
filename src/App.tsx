@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import OrdersPage from "./pages/Orders/OrdersPageMain/OrdersPage";
-import ProductsPage from "./pages/Products/ProductsPageMain/ProductsPage";
+import ProjectsPage from "./pages/Projects/ProjectsMain/ProjectsPage"; 
 import SellersPage from "./pages/Sellers/SellersPageMain/SellersPage";
 import ErrorPages from "./pages/Error/ErrorPages";
 
@@ -16,8 +16,7 @@ import OrdersShowEdit from "./pages/Orders/OrdersShowEdit/OrdersShowEdit";
 
 import ProductsShowEdit from "./pages/Products/ProductsShowEdit/ProductsShowEdit";
 import ProductsCreate from "./pages/Products/ProductsCreate/ProductsCreate";
-import AddProductChild from "./pages/Products/AddProductChild/AddProductChild";
-import ProductChild from "./pages/Products/ProductChild/ProductChild";
+
 
 
 import WorkersMain from "./pages/Workers/WorkersMain/WorkersMain";
@@ -39,6 +38,7 @@ import './App.css'
 import { useAppDispatch } from "./store/store";
 import {setUser } from "./store/reducer/userReducer";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<LayoutMenu />}>
@@ -54,12 +54,11 @@ const router = createBrowserRouter(
       <Route path="sellers/create" element={<RequireAuth><SellersCreate edit={true} /></RequireAuth>}></Route>
       <Route path="sellers/edit/:id" element={<RequireAuth><SellersShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
 
-      <Route path="products" element={<RequireAuth><ProductsPage /></RequireAuth>}></Route>
+      <Route path="projects" element={<RequireAuth><ProjectsPage /></RequireAuth>}></Route>
       <Route path="products/:id" element={<RequireAuth><ProductsShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>
       <Route path="products/create" element={<RequireAuth><ProductsCreate edit={true} /></RequireAuth>}></Route>
       <Route path="products/edit/:id" element={<RequireAuth><ProductsShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
-      <Route path="products/add-variants/:id" element={<RequireAuth><AddProductChild edit={true} nameFunc="save" /></RequireAuth>}></Route>
-      <Route path="products/edit-variants/:id/:color" element={<RequireAuth><ProductChild edit={true} nameFunc="save" /></RequireAuth>}></Route>
+
 
       <Route path="orders" element={<RequireAuth><OrdersPage /></RequireAuth>}></Route>
       <Route path="orders/:id" element={<RequireAuth><OrdersShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>

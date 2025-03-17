@@ -190,7 +190,7 @@ function Filter(props: IProps) {
                         <span className="filter__close" onClick={closeCalendarClick}>X</span>
                         {isCancel && <span className="calendar__cancel" onClick={clickCancelCalendar}>Сбросить</span>}
                         <div className="calendar" >
-                            <DatePicker id="dateCalendar" onDoubleClick={doubleClick} shouldCloseCalendar={closeCalendar} maxDate={data["minNowDate"] ? new Date(new Date().setDate(new Date().getDate() + 366)) : new Date()} minDate={data["minNowDate"] ? new Date(new Date().setDate(new Date().getDate() - 30)) : new Date("12.12.2022")} isOpen={true} calendarClassName="test" className={"calendar"} onChange={onChangeValue} locale="ru-RU" value={valueDate} />
+                            <DatePicker id="dateCalendar" onDoubleClick={doubleClick} shouldCloseCalendar={closeCalendar}  isOpen={true} calendarClassName="test" className={"calendar"} onChange={onChangeValue} locale="ru-RU" value={valueDate} />
                         </div>
                     </>}
             </div>
