@@ -5,17 +5,17 @@ import { api } from "../../../store/api/api";
 import ErrorPages from '../../Error/ErrorPages';
 
 import CreateHead from '../../../components/CreateHead/CreateHead';
-import ProductForm from '../../../components/ProductForm/ProductForm';
+import ProjectForm from '../../../components/ProjectForm/ProjectForm';
 
 interface IProps {
     edit: boolean;
     nameFunc: string;
 }
-function ProductsShowEdit(props: IProps) {
+function ProjectShowEdit(props: IProps) {
     const { id } = useParams();
     const { edit, nameFunc } = props;
-    const { data, error, isLoading } = api.useFetchGetProductQuery(id ? id : "-2");
-    const [editSeller, { isError: editError }] = api.useFetchEditProductMutation();
+    const { data, error, isLoading } = api.useGetProjectQuery(id ? id : "-2");
+    const [editProject, { isError: editError }] = api.useEditProjectMutation();
 
 
     const btnSubmitRef = useRef<HTMLInputElement>(null)
@@ -31,12 +31,12 @@ function ProductsShowEdit(props: IProps) {
     if (error || editError) return (<ErrorPages></ErrorPages>)
 
 
-    if (data && data.parent) return <ErrorPages></ErrorPages>
-    if (data && !data.parent) return (
-        <> <CreateHead title="Карточка товара" redirect={false} nameFunc={nameFunc} saveFunc={clickSave} namePage="products" />
-            <ProductForm sendFormFilters={sendFormFilters} funcRequest={editSeller} data={data} edit={edit} refBtn={btnSubmitRef} id={id} ></ProductForm>
+    if (!data) return <ErrorPages></ErrorPages>
+    if (data) return (
+        <> <CreateHead title="Карточка проекта" redirect={false} nameFunc={nameFunc} saveFunc={clickSave} namePage="projects" />
+            <ProjectForm sendFormFilters={sendFormFilters} funcRequest={editProject} data={data} edit={edit} refBtn={btnSubmitRef} id={id} ></ProjectForm>
         </>
     )
 }
 
-export default ProductsShowEdit
+export default ProjectShowEdit

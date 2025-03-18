@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import CreateHead from "../../../components/CreateHead/CreateHead";
-import ProductForm from "../../../components/ProductForm/ProductForm";
+import ProjectForm from "../../../components/ProjectForm/ProjectForm";
 
 import { api } from "../../../store/api/api";
 import ErrorPages from "../../Error/ErrorPages";
@@ -9,7 +9,7 @@ interface IProps {
     edit: boolean
 }
 
-function ProductsCreate(props: IProps) {
+function ProjectsCreate(props: IProps) {
     const { edit } = props;
     const btnSubmitRef = useRef<HTMLInputElement>(null);
 
@@ -20,18 +20,18 @@ function ProductsCreate(props: IProps) {
         setSendFormFilters(true)
     }
 
-    const [createProduct, { isError: createError }] = api.useFetchCreateProductMutation();
+    const [createProject, { isError: createError }] = api.useCreateProjectMutation();
 
     if (createError) return <ErrorPages></ErrorPages>
 
 
     return (
         <>
-            <CreateHead redirect={false} title={"Карточка товара"} nameFunc="save" namePage="products" saveFunc={clickSave} />
-            <ProductForm sendFormFilters={sendFormFilters} edit={edit} funcRequest={createProduct} refBtn={btnSubmitRef}></ProductForm>
+            <CreateHead redirect={false} title={"Карточка проекта"} nameFunc="save" namePage="projects" saveFunc={clickSave} />
+            <ProjectForm sendFormFilters={sendFormFilters} edit={edit} funcRequest={createProject} refBtn={btnSubmitRef}></ProjectForm>
 
 
         </>
     )
 }
-export default ProductsCreate
+export default ProjectsCreate

@@ -40,7 +40,16 @@ export const api = createApi({
 
     tagTypes: ["Davdamers", 'Sellers', 'Products', 'Orders', "Attr", "Analytics", "Workers", 'Projects', "Tasks", "Roles"],
     endpoints: (build) => ({
+        login: build.mutation({
+            query: (body: ILoginAPI) => {
+                return ({
+                    url: `/auth/login`,
+                    method: 'POST',
+                    body: body
+                })
+            },
 
+        }),
         getWorkers: build.query<IWorker[], IParamsAPI>({
             query: (args) => ({
                 url: `/worker`,
@@ -108,6 +117,40 @@ export const api = createApi({
 
 
             providesTags: ['Projects']
+        }),
+        createProject: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/project`,
+                    method: 'POST',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Projects']
+        }),
+
+        getProject: build.query<IProject, string>({
+            query: (id) => ({
+                url: `/project/${id}`,
+
+            }),
+            transformResponse: ((res: IProject) => {
+
+                res.workerName = res.worker?.name || '';
+                return res
+            }),
+
+            providesTags: ['Projects']
+        }),
+        editProject: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/project/${body.id}`,
+                    method: 'PATCH',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Workers']
         }),
         getTasks: build.query<ITask[], IParamsAPI>({
             query: (args) => ({

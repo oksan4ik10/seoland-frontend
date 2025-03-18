@@ -343,7 +343,7 @@ function TablePage(props: IProps) {
                                 </div>
 
                                 <div className={"col " + style.col}>
-                                    <Link to={`/products/${item._id}`} className="btn btn__table">
+                                    <Link to={`/projects/${item._id}`} className="btn btn__table">
                                         Перейти
                                     </Link>
                                     {/* <button onClick={() => clickDel(item._id, "Удалить товар?")} className="btn btn__table btn__error">

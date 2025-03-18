@@ -21,7 +21,7 @@ const LoginPage = () => {
     const fromPage = location.state?.from?.pathname || '/';
 
 
-    const [auth] = api.useFetchLoginMutation();
+    const [auth] = api.useLoginMutation();
 
     const [error, setError] = useState(false);
 
