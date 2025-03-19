@@ -31,6 +31,7 @@ interface IProps {
 
 function ProjectForm(props: IProps) {
     const { edit, data, refBtn, funcRequest, sendFormFilters, id } = props;
+console.log(id);
 
 
 
@@ -142,7 +143,7 @@ function ProjectForm(props: IProps) {
                 if (funcRequest && data) {
                
 
-                    const dataRequest = await funcRequest({ id: data.id, body: dataParam });
+                    const dataRequest = await funcRequest({ id, body: dataParam });
                     if (dataRequest.error) return
                     navigate(`/projects`)
                 }
