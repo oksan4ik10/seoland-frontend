@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
-import OrdersPage from "./pages/Tasks/TasksMain/TasksPage";
-import ProjectsPage from "./pages/Projects/ProjectsMain/ProjectsPage"; 
+
 
 import ErrorPages from "./pages/Error/ErrorPages";
 
+import TasksPage from "./pages/Tasks/TasksMain/TasksPage";
+import TasksCreate from "./pages/Tasks/TasksCreate/TasksCreate";
+import TasksShowEdit from "./pages/Tasks/TasksShowEdit/TasksShowEdit";
 
-
-import OrdersShowEdit from "./pages/Orders/OrdersShowEdit/OrdersShowEdit";
-
-
+import ProjectsPage from "./pages/Projects/ProjectsMain/ProjectsPage"; 
 import ProjectShowEdit from "./pages/Projects/ProjectShowEdit/ProjectShowEdit";
 import ProjectsCreate from "./pages/Projects/ProjectsCreate/ProjectsCreate";
 
@@ -53,9 +52,10 @@ const router = createBrowserRouter(
       <Route path="projects/edit/:id" element={<RequireAuth><ProjectShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
 
 
-      <Route path="orders" element={<RequireAuth><OrdersPage /></RequireAuth>}></Route>
-      <Route path="orders/:id" element={<RequireAuth><OrdersShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>
-      <Route path="orders/edit/:id" element={<RequireAuth><OrdersShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
+      <Route path="tasks" element={<RequireAuth><TasksPage/></RequireAuth>}></Route>
+      <Route path="tasks/create" element={<RequireAuth><TasksCreate   edit={true} /></RequireAuth>}></Route>
+      <Route path="tasks/:id" element={<RequireAuth><TasksShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>
+      <Route path="tasks/edit/:id" element={<RequireAuth><TasksShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
 
       <Route path="attributes" element={<RequireAuth><DirectoryMain /></RequireAuth>}></Route>
       <Route path="attributes/create" element={<RequireAuth><DirectoryCreate /></RequireAuth>}></Route>

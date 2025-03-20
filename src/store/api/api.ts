@@ -172,6 +172,41 @@ export const api = createApi({
 
             providesTags: ['Tasks']
         }),
+        getTask: build.query<ITask, string>({
+            query: (id) => ({
+                url: `/task/${id}`,
+
+            }),
+            transformResponse: ((res: ITask) => {
+
+                res.workerName = res.worker?.name || '';
+                res.projectName = res.project?.name || '';
+                res.project.id = res.project?._id || '';
+                return res
+            }),
+
+            providesTags: ['Tasks']
+        }),
+        createTask: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/task`,
+                    method: 'POST',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Tasks']
+        }),
+        editTask: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/task/${body.id}`,
+                    method: 'PATCH',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Tasks']
+        }),
         getRoles: build.query<IRole[], void>({
             query: () => ({
                 url: `/role`,

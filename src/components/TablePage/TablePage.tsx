@@ -255,7 +255,7 @@ function TablePage(props: IProps) {
             <Pages title={dataTables[nameTable].title} />
             <div className={styles.head__table + " " + (workers ? styles.sellersHead : "")}>
                 <div className={styles.btnHead}>
-                    {(davdamers || workers || projects) && <Link to={`/${nameTable}/create`} className={"btn__head btn__active " + styles.btn}>
+                    {(tasks || workers || projects) && <Link to={`/${nameTable}/create`} className={"btn__head btn__active " + styles.btn}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
                             <path d="M19 12.998H13V18.998H11V12.998H5V10.998H11V4.99805H13V10.998H19V12.998Z" fill="white" />
                         </svg>

@@ -3,12 +3,12 @@ import {  useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import {  useNavigate } from "react-router-dom";
 
-import style from "./ProjectForm.module.css"
+import style from "./TaskForm.module.css"
 
 import moment from "moment";
 import urlIconGeneral from "../../assets/images/genetalIcon.svg"
 import urlIconDesc from "../../assets/images/descIcon.svg"
-import { IProject } from "../../models/type";
+import {  ITask } from "../../models/type";
 
 import { api } from "../../store/api/api";
 import Filter from "../Filter/Filter";
@@ -20,7 +20,7 @@ import ErrorPages from "../../pages/Error/ErrorPages";
 
 interface IProps {
     edit: boolean,
-    data?: IProject,
+    data?: ITask,
     id?: string | null,
     refBtn: any,
     funcRequest?: any,
@@ -29,14 +29,14 @@ interface IProps {
 
 
 
-function ProjectForm(props: IProps) {
+function TaskForm(props: IProps) {
     const { edit, data, refBtn, funcRequest, sendFormFilters, id } = props;
 
     const { register, handleSubmit, formState: { errors } } = useForm<any>({
         defaultValues: {
             name: (data && data.name) ? data.name : edit ? "" : "Не заполнено",
             date_start: (data && data.date_start) ? data.date_start : "",
-            date_end: (data && data.date_end) ? data.date_end : "",
+            date_PlanEnd: (data && data.date_PlanEnd) ? data.date_PlanEnd : "",
             timePlan: (data && data.timePlan) ? data.timePlan : edit ? "" : "Не заполнено",
             desc: (data && data.desc) ? data.desc : edit ? "" : "Не заполнено",
         }
@@ -55,26 +55,34 @@ function ProjectForm(props: IProps) {
        type: "date"
     }
     const filterDataEnd = {
-        title: data?.date_end ?  moment(data.date_end).format("DD.MM.YYYY") : "Выберите дату",
-        nameFilter: "date_end",
-        date_end:"",
+        title: data?.date_PlanEnd ?  moment(data.date_PlanEnd).format("DD.MM.YYYY") : "Выберите дату",
+        nameFilter: "date_PlanEnd",
+        date_PlanEnd:"",
        type: "date"
     }
 
     const { data: workers, error: errorWorkers, isLoading: isWorkers } = api.useGetWorkersQuery({ idRole: "67ab2abe01aad79d986f8c37" });
     const filterWorkers = {
         title: data?.workerName || "Выберите ответственного",
-        nameFilter: "idResponsibleUser",
-        idResponsibleUser: workers ? workers.map((item) => ({ name: item.name, id: item._id })) : [],
+        nameFilter: "IDworker",
+        IDworker: workers ? workers.map((item) => ({ name: item.name, id: item._id })) : [],
+        id: true
+    }
+    const { data: projects, error: errorProjects, isLoading: isProjects } = api.useGetProjectsQuery({});
+    const filterProjects = {
+        title: data?.projectName || "Выберите проект",
+        nameFilter: "IDproject",
+        IDproject: projects ? projects.map((item) => ({ name: item.name, id: item._id })) : [],
         id: true
     }
 
 
 
     const [valuesFilter, setValuesFilter] = useState<any>({
-        idResponsibleUser: data?.idResponsibleUser || "",
+        IDproject: data?.IDproject || "",
+        IDworker: data?.IDworker || "",
         date_start:data?.date_start || "",
-        date_end:data?.date_end || ""
+        date_PlanEnd:data?.date_PlanEnd || ""
 
 
     })
@@ -102,17 +110,13 @@ function ProjectForm(props: IProps) {
     const onSubmit: SubmitHandler<any> = async (dataParam) => {
 
         let filterValues = true;
-        console.log(valuesFilter)
         for (const key in valuesFilter) {
             if (!valuesFilter[key as any]) {
                 filterValues = false;
                 break
             }
-
-
         }
 
-        // 
 
 
         if (!filterValues) return
@@ -126,7 +130,7 @@ function ProjectForm(props: IProps) {
                 if (funcRequest) {
                     const data = await funcRequest({ id: valuesFilter.seller, body: dataParam });
                     if (data.error) return
-                    navigate(`/projects`)
+                    navigate(`/tasks`)
                 }
             }
             catch {
@@ -141,7 +145,7 @@ function ProjectForm(props: IProps) {
 
                     const dataRequest = await funcRequest({ id, body: dataParam });
                     if (dataRequest.error) return
-                    navigate(`/projects`)
+                    navigate(`/tasks`)
                 }
             } catch {
                 navigate(`/404`)
@@ -156,9 +160,9 @@ function ProjectForm(props: IProps) {
 
 
 
-    if ( errorWorkers ) return <ErrorPages></ErrorPages>
+    if ( errorWorkers || errorProjects) return <ErrorPages></ErrorPages>
 
-    if (isWorkers) return <h2>Загрузка данных</h2>
+    if (isWorkers || isProjects) return <h2>Загрузка данных</h2>
 
     return (
         <>
@@ -173,6 +177,14 @@ function ProjectForm(props: IProps) {
                 </div>
                 <div className={style.form__general}>
                     <h3 className="form__title"><img src={urlIconGeneral} alt="desc" />Общее</h3>
+                    <div className={"form__label" + " " + (valuesFilter.IDproject ? "value" : "")}>
+                        <span>Проект</span>
+                        {!edit && data?.projectName && <span className={style.spanName}>{data.projectName}</span>}
+                        {edit && <Filter data={filterProjects as any} setParamsFilter={setParamsFilter}></Filter>}
+
+                        {edit && sendFormFilters && !valuesFilter.IDproject && <span className="form__error">Выберите проект</span>}
+                    </div>
+
                     <div className={"form__label" + " " + (valuesFilter.date_start ? "value" : "")}>
                         <span>Начало</span>
                         {((!edit && data) ) && <span className={style.spanName}>
@@ -183,14 +195,14 @@ function ProjectForm(props: IProps) {
                         {sendFormFilters && edit && !valuesFilter.date_start && <span className="form__error">Выберите дату</span>}
                     </div>
 
-                    <div className={"form__label" + " " + (valuesFilter.date_end ? "value" : "")}>
+                    <div className={"form__label" + " " + (valuesFilter.date_PlanEnd ? "value" : "")}>
                         <span>Окончание</span>
                         {((!edit && data)) && <span className={style.spanName}>
-                             {moment(data.date_end).format("DD.MM.YYYY")}
+                             {moment(data.date_PlanEnd).format("DD.MM.YYYY")}
                             </span>}
                         {edit && <Filter data={filterDataEnd as any} setParamsFilter={setParamsFilter}></Filter>}
 
-                        {sendFormFilters && edit && !valuesFilter.date_end && <span className="form__error">Выберите дату</span>}
+                        {sendFormFilters && edit && !valuesFilter.date_PlanEnd && <span className="form__error">Выберите дату</span>}
                     </div>
                     <div className={"form__label " + style.form__price}>
                         <span>Трудозатраты (часы)</span>
@@ -201,12 +213,12 @@ function ProjectForm(props: IProps) {
                         )} />}
                         {errors.timePlan && <span className="form__error">Введите положительное число </span>}
                     </div>
-                    <div className={"form__label" + " " + (valuesFilter.idResponsibleUser ? "value" : "")}>
-                        <span>Ответственный</span>
+                    <div className={"form__label" + " " + (valuesFilter.IDworker ? "value" : "")}>
+                        <span>Ответственный за задачу</span>
                         {!edit && data?.workerName && <span className={style.spanName}>{data.workerName}</span>}
                         {edit && <Filter data={filterWorkers as any} setParamsFilter={setParamsFilter}></Filter>}
 
-                        {edit && sendFormFilters && !valuesFilter.idResponsibleUser && <span className="form__error">Выберите ответственного</span>}
+                        {edit && sendFormFilters && !valuesFilter.IDworker && <span className="form__error">Выберите ответственного</span>}
                     </div>
 
 
@@ -243,4 +255,4 @@ function ProjectForm(props: IProps) {
     )
 }
 
-export default ProjectForm
+export default TaskForm
