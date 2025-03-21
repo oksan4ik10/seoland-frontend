@@ -8,6 +8,7 @@ import ErrorPages from "./pages/Error/ErrorPages";
 import TasksPage from "./pages/Tasks/TasksMain/TasksPage";
 import TasksCreate from "./pages/Tasks/TasksCreate/TasksCreate";
 import TasksShowEdit from "./pages/Tasks/TasksShowEdit/TasksShowEdit";
+import TasksPlan from "./pages/Tasks/TasksPlan/TasksPlan";
 
 import ProjectsPage from "./pages/Projects/ProjectsMain/ProjectsPage"; 
 import ProjectShowEdit from "./pages/Projects/ProjectShowEdit/ProjectShowEdit";
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
       <Route path="tasks/create" element={<RequireAuth><TasksCreate   edit={true} /></RequireAuth>}></Route>
       <Route path="tasks/:id" element={<RequireAuth><TasksShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>
       <Route path="tasks/edit/:id" element={<RequireAuth><TasksShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
+      <Route path="tasks/plan/:id" element={<RequireAuth><TasksPlan edit={true} /></RequireAuth>}></Route>
 
       <Route path="attributes" element={<RequireAuth><DirectoryMain /></RequireAuth>}></Route>
       <Route path="attributes/create" element={<RequireAuth><DirectoryCreate /></RequireAuth>}></Route>

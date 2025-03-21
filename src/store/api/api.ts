@@ -67,6 +67,23 @@ export const api = createApi({
 
             providesTags: ['Workers']
         }),
+        getFreeWorkers: build.query<IWorker[], void>({
+            query: () => ({
+                url: `/worker/busy/free`,
+
+
+            }),
+            transformResponse: ((res: IWorker[]) => {
+                const newRes = res.map((item) => {
+                    item.roleName = item.role?.name || '';
+                    return item
+                })
+
+                return newRes
+            }),
+
+            providesTags: ['Workers']
+        }),
         getWorker: build.query<IWorker, string>({
             query: (id) => ({
                 url: `/worker/${id}`,

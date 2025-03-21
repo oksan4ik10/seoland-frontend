@@ -61,7 +61,7 @@ function TaskForm(props: IProps) {
        type: "date"
     }
 
-    const { data: workers, error: errorWorkers, isLoading: isWorkers } = api.useGetWorkersQuery({ idRole: "67ab2abe01aad79d986f8c37" });
+    const { data: workers, error: errorWorkers, isLoading: isWorkers } = api.useGetFreeWorkersQuery();
     const filterWorkers = {
         title: data?.workerName || "Выберите ответственного",
         nameFilter: "IDworker",
@@ -75,15 +75,19 @@ function TaskForm(props: IProps) {
         IDproject: projects ? projects.map((item) => ({ name: item.name, id: item._id })) : [],
         id: true
     }
-
+    const filterStatus= {
+        title: data?.status || "Выберите статус",
+        nameFilter: "status",
+        status: ["Новый",'Завершен', "Отменен", "В процессе"],
+    }
 
 
     const [valuesFilter, setValuesFilter] = useState<any>({
         IDproject: data?.IDproject || "",
         IDworker: data?.IDworker || "",
         date_start:data?.date_start || "",
-        date_PlanEnd:data?.date_PlanEnd || ""
-
+        date_PlanEnd:data?.date_PlanEnd || "",
+        status: data?.status || ""
 
     })
 
@@ -168,6 +172,13 @@ function TaskForm(props: IProps) {
         <>
             <form className={'form ' + (edit && !data  ? style.formEdit : "") + " " + style.form + " " + (!edit ? "show" : "")} encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
                 <div className={"form__head " + style.form__head}>
+                <div className={"form__label" + " " + (valuesFilter.status ? "value" : "")}>
+                        <span>Статус</span>
+                        {!edit && data?.status && <span className={style.spanName + " " + style.status}>{data.status}</span>}
+                        {edit && <Filter data={filterStatus as any} setParamsFilter={setParamsFilter}></Filter>}
+
+                        {edit && sendFormFilters && !valuesFilter.status && <span className="form__error">Выберите статус</span>}
+                    </div>
 
                     <label className="form__name form__label">
                         {edit && <span>Название</span>}

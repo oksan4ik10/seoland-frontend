@@ -33,6 +33,7 @@ function CreateHead(props: IProps) {
                         {cancel && <button className="btn__cancel btn__head" onClick={cancelClick}>Отмена</button>}
                         {!cancel && <Link to={`/${namePage}`} className="btn__cancel btn__head">Отмена</Link>}
                         {nameFunc === "show" && <Link to={`/${namePage}/edit/${id}`} className="btn__active btn__head">Редактировать</Link>}
+                        {nameFunc === "show" && namePage==="tasks" && <Link to={`/${namePage}/plan/${id}`} className="btn__active btn__head">Планирование</Link>}
                         {nameFunc === "save" && <button className="btn__active btn__head" onClick={saveClick}>Сохранить</button>}
                     </div>
                 </div>

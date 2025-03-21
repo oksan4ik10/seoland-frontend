@@ -269,11 +269,7 @@ export const statusOrder: IStatusOrder = {
 
 export const statusOrderColor: IStatusOrder = {
     "Новый": "#8D989E",
-    PAID: "#B37B00",
     "В процессе": "#FFC448",
-    SENT: "#009150",
-    DELIVERED: "#004B2A",
-    REFUND: "#9B2D30",
     "Отменен": "#D24950",
     "Завершен": "#D4E0FA"
 }
