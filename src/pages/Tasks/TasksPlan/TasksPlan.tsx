@@ -1,35 +1,33 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import CreateHead from "../../../components/CreateHead/CreateHead";
-
+import { useParams } from 'react-router-dom'
 
 import { api } from "../../../store/api/api";
 import ErrorPages from "../../Error/ErrorPages";
-import TaskForm from "../../../components/TaskForm/TaskForm";
 
-interface IProps {
-    edit: boolean,
-}
+import TaskPlanForm from "../../../components/TaskPlanForm/TaskPlanForm";
 
-function TasksPlan(props: IProps) {
-    const { edit } = props;
+
+function TasksPlan() {
+    const { id } = useParams();
     const btnSubmitRef = useRef<HTMLInputElement>(null);
-
-    const [sendFormFilters, setSendFormFilters] = useState(false);
+    const { data, error, isLoading } = api.useGetTrackingQuery(id ? id : "-2");
 
     const clickSave = () => {
         if (btnSubmitRef.current) { btnSubmitRef.current.click() }
-        setSendFormFilters(true)
     }
 
-    const [createTask, { isError: createError }] = api.useCreateTaskMutation();
+    const [editTrack, { isError: createError }] = api.useEditTrackMutation();
 
-    if (createError) return <ErrorPages></ErrorPages>
+
+    if(isLoading) return (<h2>Загрузка данных</h2>)
+    if (createError || error) return <ErrorPages></ErrorPages>
 
 
     return (
         <>
             <CreateHead redirect={false} title={"Карточка задачи"} nameFunc="save" namePage="tasks" saveFunc={clickSave} />
-            <TaskForm sendFormFilters={sendFormFilters} funcRequest={createTask}  edit={edit} refBtn={btnSubmitRef} ></TaskForm>
+            {data && id && <TaskPlanForm data={data} id={id}  funcRequest={editTrack}  refBtn={btnSubmitRef} ></TaskPlanForm>}
 
 
         </>

@@ -1,7 +1,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask, IRole } from '../../models/type'
+import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask, IRole, ITrack } from '../../models/type'
 import { statusOrder } from '../../models/type';
 
 import { RootState } from '../store';
@@ -218,6 +218,32 @@ export const api = createApi({
             query: (body) => {
                 return ({
                     url: `/task/${body.id}`,
+                    method: 'PATCH',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Tasks']
+        }),
+        getTracking: build.query<ITrack, string>({
+            query: (id) => ({
+                url: `/tracking/${id}`,
+
+            }),
+            transformResponse: ((res: ITrack) => {
+
+                res.workerName = res.worker?.name || '';
+                res.projectName = res.project?.name || '';
+                res.taskName = res.task?.name || '';
+                res.taskDesc = res.task?.desc || '';
+                return res
+            }),
+
+            providesTags: ['Tasks']
+        }),
+        editTrack: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/tracking/editData/${body.id}`,
                     method: 'PATCH',
                     body: body.body
                 })

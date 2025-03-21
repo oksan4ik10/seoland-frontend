@@ -42,6 +42,23 @@ export interface ITask {
 
 
 }
+export interface ITrack {
+    _id: string,
+    IDworker: string,
+    IDproject: string,
+    attr: {
+        dateWork: Date,
+        timePlan: number,
+        timeFact: number
+    }[],
+    project: IProject,
+    worker: IWorker,
+    task: ITask,
+    workerName: string,
+    projectName: string
+    taskName: string,
+    taskDesc: string
+}
 export interface IRole {
     _id: string,
     code: string,

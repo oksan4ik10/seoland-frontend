@@ -132,7 +132,7 @@ function TaskForm(props: IProps) {
 
             try {
                 if (funcRequest) {
-                    const data = await funcRequest({ id: valuesFilter.seller, body: dataParam });
+                    const data = await funcRequest({ id, body: dataParam });
                     if (data.error) return
                     navigate(`/tasks`)
                 }
