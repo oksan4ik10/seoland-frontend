@@ -20,10 +20,6 @@ import WorkersMain from "./pages/Workers/WorkersMain/WorkersMain";
 import WorkerCreate from "./pages/Workers/WorkerCreate/WorkerCreate";
 import WorkerEdit from "./pages/Workers/WorkerEdit/WorkerEdit";
 
-import DirectoryMain from "./pages/Directory/DirectoryMain/DirectoryMain";
-import DirectoryCreate from "./pages/Directory/DirectoryCreate/DirectoryCreate";
-import DirectoryEdit from "./pages/Directory/DirectoryEdit/DirectoryEdit";
-
 import { LoginPage } from "./pages/Login/LoginPage";
 import { RequireAuth } from "./hoc/RequireAuth";
 
@@ -57,12 +53,7 @@ const router = createBrowserRouter(
       <Route path="tasks/create" element={<RequireAuth><TasksCreate   edit={true} /></RequireAuth>}></Route>
       <Route path="tasks/:id" element={<RequireAuth><TasksShowEdit edit={false} nameFunc="show" /></RequireAuth>}></Route>
       <Route path="tasks/edit/:id" element={<RequireAuth><TasksShowEdit edit={true} nameFunc="save" /></RequireAuth>}></Route>
-      <Route path="tasks/plan/:id" element={<RequireAuth><TasksPlan edit={true} /></RequireAuth>}></Route>
-
-      <Route path="attributes" element={<RequireAuth><DirectoryMain /></RequireAuth>}></Route>
-      <Route path="attributes/create" element={<RequireAuth><DirectoryCreate /></RequireAuth>}></Route>
-      <Route path="attributes/edit/:id" element={<RequireAuth><DirectoryEdit /></RequireAuth>}></Route>
-
+      <Route path="tasks/plan/:id" element={<RequireAuth><TasksPlan  /></RequireAuth>}></Route>
       <Route path="login" element={<LoginPage />}></Route>
 
       <Route path="*" element={<RequireAuth><ErrorPages /></RequireAuth>}></Route>

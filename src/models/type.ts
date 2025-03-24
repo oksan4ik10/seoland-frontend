@@ -65,6 +65,22 @@ export interface IRole {
     name: string,
 
 }
+export interface IAnalyticsPlan {
+    data: IPlan[],
+    project: IProject
+}
+export interface IPlan {
+    _is: string;
+    timePlan: number,
+    timeFact: number,
+    FOTfact: number,
+    FOTplan: number,
+    countWorkers: number,
+    timeProc: 75,
+    month: string,
+    countSort?: string,
+    timeProgress: number
+}
 //==========OLD
 interface IDavdamer {
     id: number;

@@ -1,7 +1,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask, IRole, ITrack } from '../../models/type'
+import { ISeller, IProduct, IOrder, ICategoryAPI, IProductClassesAPI, IOrderInfo, IAttrAPI, ILoginAPI, IUser, IDavdamerInfo, IAttributesValues, IAttrValuesAPI, IFiltersAnalyticsAPI, IDataAnalyticsAPI, IDataDiagram, IWorker, IProject, ITask, IRole, ITrack, IAnalyticsPlan } from '../../models/type'
 import { statusOrder } from '../../models/type';
 
 import { RootState } from '../store';
@@ -49,6 +49,14 @@ export const api = createApi({
                 })
             },
 
+        }),
+        getAnalytic: build.query<IAnalyticsPlan, string>({
+            query: (id) => ({
+                url: `/analytics/plan/${id}`,
+
+            }),
+
+            providesTags: ['Projects']
         }),
         getWorkers: build.query<IWorker[], IParamsAPI>({
             query: (args) => ({
