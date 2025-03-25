@@ -13,10 +13,8 @@ import Filter from "../../components/Filter/Filter";
 
 import styles from "./Homepage.module.css"
 import {  IPlan } from "../../models/type";
-// import { Chart } from "../../components/ChartDiagram/ChartDiagram";
-// import AreaChart from "../../components/ChartArea/ChartArea";
-
 import { ExportReactCSV } from "../../components/ExportReactCSV/ExportReactCSV"
+import { Chart } from "../../components/ChartDiagram/ChartDiagram";
 
 
 
@@ -32,7 +30,6 @@ const Row = (dataTabel: IPropRow) => {
     const item = data[index];
     return (
         <div className={styles.rowWrapper} style={style} key={index}>
-
 
             <div className={"row " + styles.row + " " + styles.rowItem} >
                 <div className={"col "}>
@@ -66,26 +63,30 @@ const Row = (dataTabel: IPropRow) => {
 
 }
 
-
+interface IFilter{
+    project: undefined | string
+}
 
 function HomePage() {
 
-    const [valuesFilter, setValuesFilter] = useState({project: "65ce28d8f77a1d1b3454f0d1"})
+    const [valuesFilter, setValuesFilter] = useState<IFilter>({project: undefined})
 
     const { data: dataFilters, error: errorFilter, isLoading: isLoadingFilter } = api.useGetProjectsQuery({});
-    const { data, error, isLoading } = api.useGetAnalyticQuery(valuesFilter.project);
+    const { data, error, isLoading } = api.useGetAnalyticQuery(valuesFilter.project as string,  {
+        skip: valuesFilter.project === undefined, 
+      });
 
     const filtersData = {
         title: "Проекты",
         nameFilter: "project",
-        project: dataFilters ? dataFilters.map((item) => ({ name: item.name, id: item.id })) : [],
+        project: dataFilters ? dataFilters.map((item) => ({ name: item.name, id: item._id })) : [],
         id: true
     
     }
 
     const setParamsFilter = (_: "project", value: string) => {
-        valuesFilter.project = value;
-        setValuesFilter(valuesFilter)
+
+        setValuesFilter({project: value})
     }
 
     if (isLoading || isLoadingFilter ) return (<p>Загрузка данных</p>)
@@ -103,7 +104,16 @@ function HomePage() {
                     <Filter data={filtersData} setParamsFilter={setParamsFilter as any}></Filter>
 
                 </div>
-
+                {data && data.data.length > 0 && <div className={styles.charts}>
+                    <div className={styles.chartItem}>
+                        <h3 className={styles.chartTitle}>Трудозатраты по месяцам</h3>
+                        {data.data && <Chart isLine={false} dataDiagram={data.data} bg={"#5A719D"}></Chart>}
+                    </div>
+                    <div className={styles.chartItem}>
+                        <h3 className={styles.chartTitle}>График продвижения проекта</h3>
+                        {data.data && <Chart isLine={true} dataDiagram={data.data} bg={"#5A719D"}></Chart>}
+                    </div>
+                </div>}
                 {data && data.data.length > 0 && <div className={"tables " + styles.tables}>
                     <div className={"row row__title " + styles.row + " " + styles.row__title}>
                         <div className="col__title ">

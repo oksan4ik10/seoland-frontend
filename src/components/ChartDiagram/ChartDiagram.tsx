@@ -7,11 +7,11 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
+import "chart.js/auto";
 
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import { IDataDiagram } from '../../models/type';
+import {  IPlan } from '../../models/type';
 
 
 ChartJS.register(
@@ -23,101 +23,56 @@ ChartJS.register(
     Legend
 );
 
-export const options = {
+const options = {
     responsive: true,
-    indexAxis: 'y' as const,
-    scales: {
-        x: {
-
-
-            grid: {
-                display: false,
-            },
-            ticks: {
-                min: 100000,
-
-                stepSize: 100000,
-                font: {
-                    family: "Rubik",
-                    size: "12px"
-                },
-
-            },
-
-        },
-        y: {
-            display: false,
-            grid: {
-                display: false,
-            },
-        },
-    },
     plugins: {
         legend: {
-            display: false,
-            labels: {
-                font: {
-                    family: "Rubik",
-                    size: 14,
-                },
-
-            }
+          position: 'top' as const,
         },
-        datalabels: {
-            align: "end",
-            anchor: "end",
-            color: '#131313',
-            formatter: function (value: string) {
-                return `${value} ₽`
-            }
-            ,
-            padding: 0,
-            font: {
-                family: "Rubik",
-                size: "14px"
-            },
-
-
-        }
-    },
+        title: {
+          display: false,
+        },
+      },
 
 };
 
 
-
 interface IProps {
-    dataDiagram: IDataDiagram[]
-    bg: string
+    dataDiagram: IPlan[]
+    bg: string,
+    isLine: boolean
 }
 export function Chart(props: IProps) {
-    const { dataDiagram, bg } = props;
-
-    const labels: string[] = [];
-    const dataSetValues: number[] = [];
-
-
-    for (let index = 0; index < dataDiagram.length; index++) {
-        labels.push(dataDiagram[index].label)
-        dataSetValues.push(Number(dataDiagram[index].value))
-
-    }
+    const { dataDiagram, bg, isLine} = props;
 
     const data = {
-        labels,
+        labels: dataDiagram.map((item)=> item.month),
         datasets: [{
-            label: "",
-            data: dataSetValues,
-
-            stack: "001",
-
+            label: "По плану",
+            data: dataDiagram.map((item)=> item.timePlan),
             backgroundColor: bg,
-
-
-        }]
+        },
+        {
+            label: "По факту",
+            data: dataDiagram.map((item)=> item.timeFact),
+            backgroundColor: "#F2B93A",
+        },
+        
+    ]
     }
-
-
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return <Bar plugins={[ChartDataLabels]} options={options as any} data={data as any} />;
+    const dataLine = {
+        labels: dataDiagram.map((item)=> item.month),
+        datasets: [{
+            label: "Темп работ",
+            data: dataDiagram.map((item)=> item.timeProgress),
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            fill: true
+        },]
+    }
+   
+    if(!isLine)
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return <Bar options={options as any} data={data as any} />;
+    return <Line options={options} data={dataLine} />;
 }
