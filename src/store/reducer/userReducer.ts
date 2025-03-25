@@ -8,7 +8,7 @@ export interface IUserInfo {
     isAdmin: boolean
 }
 
-const initialState: IUserInfo = { access_token: "", user: { last_name: "", name: "", id: -1, image: "", is_admin: false, role: null }, isAuth: false, isAdmin: false };
+const initialState: IUserInfo = { access_token: "", user: { last_name: "", name: "", id: "", image: "", is_admin: false, role: null }, isAuth: false, isAdmin: false };
 
 export const userSlice = createSlice({
     name: 'user',

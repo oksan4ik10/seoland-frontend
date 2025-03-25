@@ -15,9 +15,7 @@ import { statusOrderColor } from "../../models/type";
 import Filter from "../Filter/Filter";
 
 
-import Modal from "../Modal/Modal";
-import { disablePageScroll, enablePageScroll } from 'scroll-lock';
-import { useAppSelector } from "../../store/store";
+
 // import { davDamerAPI } from "../../store/api/DavdamerAPI";
 
 
@@ -109,7 +107,7 @@ interface IProps {
 }
 
 function TablePage(props: IProps) {
-    const { delItem, nameTable, tasks, workers, style, lengthRow, projects, setParamsFilter, davdamers } = props;
+    const {  nameTable, tasks, workers, style, lengthRow, projects, setParamsFilter, davdamers } = props;
 
 
     const [arrRowActive, setArrRowActive] = useState<boolean[]>(Array(lengthRow).fill(false));
@@ -213,23 +211,9 @@ function TablePage(props: IProps) {
 
 
 
-    const deleteProduct = (id: any) => {
-        if (delItem) return delItem(id);
 
-    }
-    const [idDelProduct, setIdDelProduct] = useState<number>();
-    const [textModalDel, setTextModalDel] = useState("");
-    const clickDel = (id: number, str: string) => {
-        setTextModalDel(str);
-        setIdDelProduct(id);
-        disablePageScroll();
-    }
-    const closeModal = () => {
-        setIdDelProduct(undefined);
-        enablePageScroll()
-    }
 
-    const idAdmin = useAppSelector((store) => store.userReducer).user.id;
+
 
     const inputSearch = useRef<HTMLInputElement>(null)
     const clickSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -251,7 +235,7 @@ function TablePage(props: IProps) {
 
     return (
         <div onClick={clickTable} className={styles.table}>
-            {idDelProduct && <Modal text={textModalDel} funcRequest={deleteProduct} id={idDelProduct} closeModal={closeModal}></Modal>}
+            
             <Pages title={dataTables[nameTable].title} />
             <div className={styles.head__table + " " + (workers ? styles.sellersHead : "")}>
                 <div className={styles.btnHead}>
@@ -395,14 +379,7 @@ function TablePage(props: IProps) {
                                 <span>{moment(item.registered_dt).format("HH:mm")}</span>
 
                             </div>
-                            <div className={"col " + style.col}>
-                                <Link to={`/davdamers/edit/${item.id}`} className="btn btn__table">
-                                    Редактировать
-                                </Link>
-                                {item.id !== idAdmin && <button onClick={() => clickDel(item.id, "Удалить давдамера?")} className="btn btn__table btn__error">
-                                    Удалить
-                                </button>}
-                            </div>
+
                         </div>)}
                     </div>
                 </div>}
