@@ -29,7 +29,7 @@ interface IParamDeleteImg {
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:4000/api', prepareHeaders: (headers, { getState }) => {
+        baseUrl: 'https://seoland.onrender.com/api', prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).userReducer.access_token;
             if (token) {
                 headers.set('Authorization', `${token}`)
