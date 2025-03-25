@@ -41,9 +41,15 @@ export const userSlice = createSlice({
         },
         setIsAdmin(state, action: PayloadAction<boolean>) {
             state.user.is_admin = action.payload;
+        },
+        resetUser(state) {
+            state.access_token = initialState.access_token
+            state.isAdmin = initialState.isAdmin
+            state.user = initialState.user
+            state.isAuth = initialState.isAuth
         }
     },
 });
 
 export default userSlice.reducer;
-export const { setUser, setToken, setIsAuth, setIsAdmin, setInfoUser } = userSlice.actions;
+export const { setUser, setToken, setIsAuth, setIsAdmin, setInfoUser, resetUser } = userSlice.actions;

@@ -50,6 +50,16 @@ export const api = createApi({
             },
 
         }),
+        updateTimeFactWorker: build.mutation<IParamsMutation, IParamsMutation>({
+            query: (body) => {
+                return ({
+                    url: `/tracking/addDate/${body.id}`,
+                    method: 'PATCH',
+                    body: body.body
+                })
+            },
+            invalidatesTags: ['Tasks']
+        }),
         getAnalytic: build.query<IAnalyticsPlan, string>({
             query: (id) => ({
                 url: `/analytics/plan/${id}`,
@@ -207,6 +217,22 @@ export const api = createApi({
                 res.workerName = res.worker?.name || '';
                 res.projectName = res.project?.name || '';
                 res.project.id = res.project?._id || '';
+                return res
+            }),
+
+            providesTags: ['Tasks']
+        }),
+        getWorkerTask: build.query<ITask, string>({
+            query: (id) => ({
+                url: `/task/user/${id}`,
+
+            }),
+            transformResponse: ((res: ITask) => {
+
+                res.workerName = res.worker?.name || '';
+                res.projectName = res.project?.name || '';
+                res.project.id = res.project?._id || '';
+                res.projectDesc = res.project.desc || ''
                 return res
             }),
 

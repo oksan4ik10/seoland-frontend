@@ -39,6 +39,7 @@ export interface ITask {
     project: IProject
     workerName: string,
     projectName: string,
+    projectDesc: string
 
 
 }
@@ -409,7 +410,7 @@ export interface IDataDiagram {
 
 
 export interface IUser {
-    id: number,
+    id: string,
     name: string,
     last_name: string,
     image: string,

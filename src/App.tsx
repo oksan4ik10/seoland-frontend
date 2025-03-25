@@ -30,6 +30,7 @@ import './App.css'
 
 import { useAppDispatch } from "./store/store";
 import {setUser } from "./store/reducer/userReducer";
+import WorkerPage from "./pages/Worker/WorkerPage";
 
 
 
@@ -37,6 +38,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<LayoutMenu />}>
       <Route index element={<RequireAuth><HomePage /></RequireAuth>}></Route>
+
+      <Route path="worker-task" element={<RequireAuth><WorkerPage /></RequireAuth>}></Route>
+
 
       <Route path="workers" element={<RequireAuth><WorkersMain /></RequireAuth>}></Route>
       <Route path="workers/create" element={<RequireAuth><WorkerCreate /></RequireAuth>}></Route>

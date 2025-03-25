@@ -252,7 +252,7 @@ function TaskForm(props: IProps) {
                     <h3 className="form__title"> <img src={urlIconDesc} alt="desc" />Описание</h3>
                     <div className="form__textarea">
                         <label className="form__label">
-                            <span>Общее описание товара</span>
+                            <span>Общее описание задачи</span>
                             {edit && <textarea name="description" onChange={changeDesc} id="" cols={30} rows={10} value={desc}></textarea>}
                             {!edit && <textarea disabled name="description" value={desc ? desc : "Не заполнено"} onChange={changeDesc} id="" cols={30} rows={10}></textarea>}
                         </label>

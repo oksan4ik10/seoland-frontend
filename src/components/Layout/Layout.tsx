@@ -8,11 +8,10 @@ function LayoutMenu() {
     const location = useLocation();
 
     const isAdmin = useAppSelector((store) => store.userReducer).isAdmin;
-    console.log("isAdmin: ", isAdmin);
     
     const token = useAppSelector((store) => store.userReducer).access_token;
 
-    if (location.pathname === "/login" || !token) return <Outlet />
+    if (location.pathname === "/login" || !token || !isAdmin) return <Outlet />
 
 
     return (

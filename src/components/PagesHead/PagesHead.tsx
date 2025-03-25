@@ -1,25 +1,33 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { setUser } from "../../store/reducer/userReducer";
+import { resetUser } from "../../store/reducer/userReducer";
 
 import "./PagesHead.css"
 
 
 interface IProps {
     title: string;
+    isWorker?:boolean
 }
 function Pages(props: IProps) {
 
-    const { title } = props;
+    const { title, isWorker} = props;
 
     const infoUser = useAppSelector((store) => store.userReducer).user;
 
 
     const dispatch = useAppDispatch();
     const clickLogOut = () => {
-        dispatch(setUser(null))
+        dispatch(resetUser())
         localStorage.removeItem("user")
-        return <Navigate to='/login' state={{ from: location }} />
+        if(isWorker) {
+            setTimeout(()=> {
+                window.location.reload()
+            }, 200)
+        }
+        return <Navigate to='/login' />
+
+     
     }
     return (
         <>
